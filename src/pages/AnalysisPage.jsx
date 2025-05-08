@@ -143,6 +143,8 @@ const AnalysisPage = () => {
 
     if (isLoading) return <div>Загрузка...</div>
 
+    
+
     return (
         <Container>
             <Header />
