@@ -10,6 +10,7 @@ export const TransactionsProvider = ({ children }) => {
     const [transactions, setTransactions] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
+    const [isUsed, setIsUsed] = useState(true)
     const { user } = useContext(AuthContext)
 
     const fetchTransactions = async (params = {}) => {
@@ -129,6 +130,8 @@ export const TransactionsProvider = ({ children }) => {
                 transactions,
                 isLoading,
                 error,
+                isUsed,
+                setIsUsed,
                 fetchTransactions,
                 addTransaction,
                 updateTransaction,
