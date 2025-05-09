@@ -15,5 +15,5 @@ export const Title = styled.h2`
     justify-content: space-between;
     align-items: center;
     padding: 36px 0 32px 0;
-    margin-bottom: 20px;
+    
 `

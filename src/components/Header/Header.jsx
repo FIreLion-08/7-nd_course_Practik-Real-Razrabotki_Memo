@@ -1,17 +1,36 @@
-import { useState } from 'react'
+import { useContext } from 'react'
 import * as S from './Header.styled.js'
+import { TransactionsContext } from '../../context/TransactionsContext.jsx'
+
 
 export const Header = () => {
-    const [isUsed, setIsUsed] = useState('true') //активная страница
+     const {isUsed, setIsUsed} = useContext(TransactionsContext)
+    console.log(isUsed)
+    
+
+    const handleClick = () => {
+        setIsUsed(true) // Меняем на противоположное
+        
+    }
+
+    const handleClickOnAnalis = () => {
+        setIsUsed(false) // Меняем на противоположное
+        
+    }
     return (
         <S.Header>
             <S.HeaderLogoImg />
             <S.MenuList>
                 <S.MenuItem>
-                        <S.HeadExpenses style={{ textDecoration: isUsed ? 'underline' : 'none' }} to="/">Мои расходы</S.HeadExpenses>
+                    <S.HeadExpenses to={'/'} onClick={handleClick} $isUsed={isUsed}>
+                        Мои расходы
+                    </S.HeadExpenses>
                 </S.MenuItem>
                 <S.MenuItem>
-                    <S.HeadAnalysis onClick={() => setIsUsed(false)} to="/analysis">
+                    <S.HeadAnalysis to={'/analysis'}
+                        
+                        onClick={handleClickOnAnalis} $isUsed={isUsed}
+                    >
                         Анализ расходов
                     </S.HeadAnalysis>
                 </S.MenuItem>

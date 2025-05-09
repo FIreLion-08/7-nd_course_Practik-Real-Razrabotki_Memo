@@ -59,10 +59,21 @@ export const MenuItem = styled.li`
 
 export const HeadExpenses = styled(NavLink)`
     width:100px;
+    ${props => props.$isUsed && `
+      color: green;
+      font-weight: 600;
+      border-bottom: 2px solid green;
+    `}
+    
 `
 
 export const HeadAnalysis = styled(NavLink)`
     width: 126px;
+    ${props => !props.$isUsed && `
+      color: green;
+      font-weight: 600;
+      border-bottom: 2px solid green;
+    `}
 `
 
 export const HeadExit = styled(NavLink)`
