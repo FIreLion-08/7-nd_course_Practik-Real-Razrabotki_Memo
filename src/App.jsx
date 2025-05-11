@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { TransactionsProvider } from './context/TransactionsContext';
 import Layout from './components/Layout';
@@ -11,7 +11,7 @@ import PrivateRoute from './components/PrivateRoute';
 
 const App = () => {
   return (
-    <Router>
+    <BrowserRouter>
       <AuthProvider>
         <TransactionsProvider>
           <Routes>
@@ -19,18 +19,16 @@ const App = () => {
             <Route path="/register" element={<AuthPage />} />
             
             <Route element={<PrivateRoute />}>
-              {/* <Route element={<Layout />}> */}
-                <Route path="/" element={<HomePage />} />
-                <Route path="/transactions" element={<TransactionsPage />} />
-                <Route path="/analysis" element={<AnalysisPage />} />
-              {/* </Route> */}
+              <Route path="/" element={<HomePage />} />
+              <Route path="/transactions" element={<TransactionsPage />} />
+              <Route path="/analysis" element={<AnalysisPage />} />
             </Route>
             
             <Route path="*" element={<ErrorPage />} />
           </Routes>
         </TransactionsProvider>
       </AuthProvider>
-    </Router>
+    </BrowserRouter>
   );
 };
 

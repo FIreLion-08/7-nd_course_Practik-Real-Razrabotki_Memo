@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }) => {
         )
         if (result.success) {
             localStorage.setItem('token', result.data.user.token)
-            setUser(result.data.user.name)
+            setUser(result.data)
         }
         return result
     }

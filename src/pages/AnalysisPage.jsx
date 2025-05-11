@@ -8,6 +8,7 @@ import { CATEGORIES } from '../constants/categories'
 
 import { Header } from '../components/Header/Header'
 
+
 const Container = styled.div`
     max-width: 1200px;
     margin: 0 auto;
@@ -126,7 +127,7 @@ const AnalysisPage = () => {
         }
 
         fetchData()
-    }, [startDate, endDate, fetchPeriodTransactions])
+    }, [])
 
     const totalAmount = transactionsData.reduce(
         (sum, transaction) => sum + transaction.sum,
@@ -142,9 +143,10 @@ const AnalysisPage = () => {
     }, {})
 
     if (isLoading) return <div>Загрузка...</div>
+    
 
     return (
-        <Container>
+        <>
             <Header />
             <StyleAnalysis>
                 <Title>Анализ расходов</Title>
@@ -191,7 +193,7 @@ const AnalysisPage = () => {
                     )}
                 </Categories>
             </StyleAnalysis>
-        </Container>
+        </>
     )
 }
 
