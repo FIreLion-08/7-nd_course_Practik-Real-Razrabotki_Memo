@@ -77,7 +77,7 @@ export const NewCard = () => {
             setDateError(value.length > 0)
         }
     }
-
+console.log('sdsdasd')
     const handleChange = (e) => {
         const { name, value } = e.target
         setFormData((prev) => ({
