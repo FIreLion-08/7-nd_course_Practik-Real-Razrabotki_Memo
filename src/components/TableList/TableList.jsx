@@ -1,45 +1,67 @@
 import { useState, useMemo, useContext } from 'react'
 import * as S from './TableList.styled.js'
 import { TransactionsContext } from '../../context/TransactionsContext.jsx'
+import { getCategoryName } from '../../constants/categories.js'
+
+const formatDate = (dateString) => {
+    if (!dateString) return ''
+
+    if (dateString.match(/^\d{2}\.\d{2}\.\d{4}$/)) {
+        return dateString
+    }
+
+    const date = new Date(dateString)
+    if (!isNaN(date.getTime())) {
+        const day = String(date.getDate()).padStart(2, '0')
+        const month = String(date.getMonth() + 1).padStart(2, '0')
+        const year = date.getFullYear()
+        return `${day}.${month}.${year}`
+    }
+
+    return dateString
+}
 
 export const TableList = () => {
     // Данные таблицы
     const {transactions} = useContext(TransactionsContext)
-    const expensesData = [
-        {
-            id: 1,
-            description: 'Пятерочка',
-            category: 'Еда',
-            date: '03.07.2024',
-            amount: '3 500 ₽',
-        },
-        {
-            id: 2,
-            description: 'Яндекс Такси',
-            category: 'Транспорт',
-            date: '03.07.2024',
-            amount: '730 ₽',
-        },
-    ]
+    // const expensesData = [
+    //     {
+    //         id: 1,
+    //         description: 'Пятерочка',
+    //         category: 'Еда',
+    //         date: '03.07.2024',
+    //         amount: '3 500 ₽',
+    //     },
+    //     {
+    //         id: 2,
+    //         description: 'Яндекс Такси',
+    //         category: 'Транспорт',
+    //         date: '03.07.2024',
+    //         amount: '730 ₽',
+    //     },
+    // ]
 
     // Состояния для фильтрации и сортировки
     const [selectedCategory, setSelectedCategory] = useState('Все')
     const [sortOrder, setSortOrder] = useState('newest')
 
     // Уникальные категории для фильтра
-    const categories = [
-        'Все',
-        ...new Set(expensesData.map((item) => item.category)),
-    ]
+    const categories = useMemo(() => {
+        const uniqueCategories = new Set(
+            transactions.map((item) => getCategoryName(item.category))
+        )
+        return ['Все', ...uniqueCategories]
+    }, [transactions])
 
     // Фильтрация и сортировка данных
     const processedData = useMemo(() => {
         // Фильтрация
         const filtered =
             selectedCategory === 'Все'
-                ? expensesData
-                : expensesData.filter(
-                      (item) => item.category === selectedCategory
+                ? transactions
+                : transactions.filter(
+                      (item) =>
+                          getCategoryName(item.category) === selectedCategory
                   )
 
         // Сортировка
@@ -48,7 +70,7 @@ export const TableList = () => {
             const dateB = new Date(b.date.split('.').reverse().join('-'))
             return sortOrder === 'newest' ? dateB - dateA : dateA - dateB
         })
-    }, [expensesData, selectedCategory, sortOrder])
+    }, [transactions, selectedCategory, sortOrder])
 
     return (
         <S.TableBox>
@@ -87,11 +109,11 @@ export const TableList = () => {
                 </S.TableHead>
 
                 <S.TableBody>
-                    {transactions.map((item) => (
+                    {processedData.map((item) => (
                         <S.TableRow key={item._id}>
                             <S.TableCell>{item.description}</S.TableCell>
-                            <S.TableCell>{item.category}</S.TableCell>
-                            <S.TableCell>{item.date}</S.TableCell>
+                            <S.TableCell>{getCategoryName(item.category)}</S.TableCell>
+                            <S.TableCell>{formatDate(item.date)}</S.TableCell>
                             <S.TableCell>{item.amount}</S.TableCell>
                         </S.TableRow>
                     ))}

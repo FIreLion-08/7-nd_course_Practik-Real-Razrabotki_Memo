@@ -95,7 +95,9 @@ export const CardCategoryItemJoy = styled.div`
     padding: 8px 20px 8px 20px;
     border: none;
     cursor: pointer;
-    ${props => props.$isActive === 'joy' && `
+    ${(props) =>
+        props.$isActive === 'joy' &&
+        `
       background-color: #DBFFE9;
       color:  #1FA46C;
       svg path {
@@ -110,7 +112,9 @@ export const CardCategoryItemHousing = styled.div`
     padding: 8px 20px 8px 20px;
     border: none;
     cursor: pointer;
-    ${props => props.$isActive === 'housing' && `
+    ${(props) =>
+        props.$isActive === 'housing' &&
+        `
       background-color: #DBFFE9;
       color:  #1FA46C;
       svg path {
@@ -125,7 +129,9 @@ export const CardCategoryItemEducation = styled.div`
     padding: 8px 20px 8px 20px;
     border: none;
     cursor: pointer;
-    ${props => props.$isActive === 'education' && `
+    ${(props) =>
+        props.$isActive === 'education' &&
+        `
       background-color: #DBFFE9;
       color:  #1FA46C;
       svg path {
@@ -140,7 +146,9 @@ export const CardCategoryItemOthers = styled.div`
     padding: 8px 20px 8px 20px;
     border: none;
     cursor: pointer;
-    ${props => props.$isActive === 'others' && `
+    ${(props) =>
+        props.$isActive === 'others' &&
+        `
       background-color: #DBFFE9;
       color:  #1FA46C;
       svg path {
@@ -148,7 +156,6 @@ export const CardCategoryItemOthers = styled.div`
 }
     `}
 `
-
 
 export const ItemName = styled.span`
     font-weight: 400;
@@ -171,10 +178,12 @@ export const CardFormDate = styled.input`
     margin-left: 32px;
     margin-bottom: 24px;
     padding-left: 12px;
+    border-color: ${(props) => (props.$hasError ? 'red' : 'initial')};
     &::placeholder {
         font-size: 12px;
         font-weight: 400;
         color: #999999;
+        
     }
 `
 export const CardSumHeader = styled.h3`
