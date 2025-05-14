@@ -22,7 +22,7 @@ const formatDate = (dateString) => {
 }
 
 export const TableList = () => {
-    // Данные таблицы
+    // Данные таблицы запросов
     const {transactions} = useContext(TransactionsContext)
     // const expensesData = [
     //     {
