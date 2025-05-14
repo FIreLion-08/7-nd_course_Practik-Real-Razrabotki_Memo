@@ -22,9 +22,12 @@ import {
 } from './StyledNewCard'
 import { postTransaction } from '../../api'
 import { AuthContext } from '../../context/AuthContext'
+import { format, parse, isValid } from 'date-fns'
+import { TransactionsContext } from '../../context/TransactionsContext'
 
 export const NewCard = () => {
     const { user } = useContext(AuthContext)
+    const { addTransaction } = useContext(TransactionsContext) // Получаем функцию добавления транзакции
     const [activeCategory, setActiveCategory] = useState(null)
     console.log(activeCategory)
     const Token = user.user.token
@@ -36,6 +39,44 @@ export const NewCard = () => {
         category: activeCategory,
         date: '',
     })
+
+    const [dateInput, setDateInput] = useState('')
+    const [dateError, setDateError] = useState(false)
+
+    const handleDateChange = (e) => {
+        let value = e.target.value
+        value = value.replace(/\D/g, '')
+
+        if (value.length > 8) {
+            value = value.slice(0, 8)
+        }
+
+        if (value.length > 4) {
+            value = `${value.slice(0, 2)}.${value.slice(2, 4)}.${value.slice(
+                4
+            )}`
+        } else if (value.length > 2) {
+            value = `${value.slice(0, 2)}.${value.slice(2)}`
+        }
+
+        setDateInput(value)
+
+        if (value.length === 10) {
+            const parsedDate = parse(value, 'dd.MM.yyyy', new Date())
+
+            if (isValid(parsedDate)) {
+                const serverFormatDate = format(parsedDate, 'yyyy-MM-dd')
+                setFormData((prev) => ({ ...prev, date: serverFormatDate }))
+                setDateError(false)
+            } else {
+                setDateError(true)
+                setFormData((prev) => ({ ...prev, date: '' }))
+            }
+        } else {
+            setFormData((prev) => ({ ...prev, date: '' }))
+            setDateError(value.length > 0)
+        }
+    }
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -58,9 +99,22 @@ export const NewCard = () => {
         // if (!validateForm()) {
         //   return;
         // }
+        if (dateError || !formData.date) {
+            setDateError(true)
+            return
+        }
+
         try {
             const response = await postTransaction(Token, formData)
             console.log(response)
+
+            // Добавляем новую транзакцию в контекст
+            addTransaction({
+                ...formData,
+                amount: formData.sum, // Используем sum как amount для совместимости с TableList
+                _id: Date.now().toString(), // Временный ID, пока не получим ответ от сервера
+                date: dateInput, // Используем отформатированную дату для отображения
+            })
         } catch (err) {
             console.log(err.message)
         } finally {
@@ -71,6 +125,7 @@ export const NewCard = () => {
                 category: '',
                 date: '',
             })
+            setDateInput('')
         }
     }
 
@@ -243,10 +298,17 @@ export const NewCard = () => {
                 <CardDateHeader>Дата</CardDateHeader>
                 <CardFormDate
                     name="date"
-                    value={formData.date}
-                    onChange={handleChange}
-                    placeholder="Введите дату"
+                    value={dateInput} // было value={formData.date}
+                    onChange={handleDateChange} // onChange={handleChange}
+                    placeholder="Введите дату (дд.мм.гггг)"
+                    maxLength="10"
+                    $hasError={dateError}
                 />
+                {dateError && (
+                    <div style={{ color: 'red', fontSize: '12px' }}>
+                        Введите корректную дату в формате дд.мм.гггг
+                    </div>
+                )}
                 <CardSumHeader>Сумма</CardSumHeader>
                 <CardFormSum
                     type="number"
