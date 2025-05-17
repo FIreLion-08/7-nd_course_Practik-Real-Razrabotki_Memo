@@ -69,7 +69,7 @@ export const AuthProvider = ({ children }) => {
     // Регистрация пользователя
     const register = async (name, login, password) => {
         const result = await makeAuthRequest(
-            userHost,
+            userHost + `/register`,
             { name, login, password }
         )
 
