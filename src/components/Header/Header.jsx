@@ -14,10 +14,13 @@ export const Header = () => {
     const handleClickOnAnalis = () => {
         setIsUsed(false) // Меняем на противоположное
     }
+
+    
+
     return (
         <S.Header>
             <Link to={'/'}>
-                <S.HeaderLogoImg />
+                <img src='../../public/Vector.svg' />
             </Link>
             <S.MenuList>
                 <S.MenuItem>
