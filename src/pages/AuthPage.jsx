@@ -27,6 +27,8 @@ const Title = styled.h2`
 `
 
 const SwitchText = styled.p`
+display: flex;
+    flex-direction: column;
     text-align: center;
     margin-top: 20px;
 `
