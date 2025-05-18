@@ -8,7 +8,6 @@ import { CATEGORIES } from '../constants/categories'
 
 import { Header } from '../components/Header/Header'
 
-
 const Container = styled.div`
     max-width: 1200px;
     margin: 0 auto;
@@ -91,8 +90,11 @@ const AnalysisPage = () => {
     const [startDate, setStartDate] = useState(startOfMonth(new Date()))
     const [endDate, setEndDate] = useState(endOfMonth(new Date()))
     const [transactionsData, setTransactionsData] = useState([])
+    console.log('transactionsData', transactionsData)
+
     const [isLoading, setIsLoading] = useState(false)
     const { fetchPeriodTransactions } = useContext(TransactionsContext)
+    console.log('fetchPeriodTransactions', fetchPeriodTransactions)
 
     const handlePeriodChange = (newPeriod) => {
         setPeriod(newPeriod)
@@ -113,28 +115,35 @@ const AnalysisPage = () => {
     useEffect(() => {
         const fetchData = async () => {
             setIsLoading(true)
-            const formattedStart = format(startDate, 'MM-dd-yyyy')
-            const formattedEnd = format(endDate, 'MM-dd-yyyy')
+            try {
+                const formattedStart = format(startDate, 'yyyy-MM-dd') // формат даты лучше записывать так
+                const formattedEnd = format(endDate, 'yyyy-MM-dd')
 
-            const result = await fetchPeriodTransactions(
-                formattedStart,
-                formattedEnd
-            )
-            if (result.success) {
-                setTransactionsData(result.data)
+                const result = await fetchPeriodTransactions(
+                    formattedStart,
+                    formattedEnd
+                )
+
+                // добавлен ? , для проверки структуры ответа (если нет, то не сломамется)
+                setTransactionsData(result?.data?.transactions || [])
+            } catch (error) {
+                console.error('Ошибка загрузки данных:', error)
+                setTransactionsData([])
             }
             setIsLoading(false)
         }
 
         fetchData()
-    }, [])
+    }, [startDate, endDate]) // зависимости, чтобы следить за их изменениями
 
-    const totalAmount = transactionsData.reduce(
+    // добавлен ?
+    const totalAmount = transactionsData?.reduce(
         (sum, transaction) => sum + transaction.sum,
         0
     )
 
-    const categoryTotals = transactionsData.reduce((acc, transaction) => {
+    // добавлен ?
+    const categoryTotals = transactionsData?.reduce((acc, transaction) => {
         if (!acc[transaction.category]) {
             acc[transaction.category] = 0
         }
@@ -152,19 +161,22 @@ const AnalysisPage = () => {
                 <Title>Анализ расходов</Title>
                 <PeriodSelector>
                     <PeriodButton
-                        active={period === 'month'}
+                        // добавлен $ в компонент
+                        $active={period === 'month'}
                         onClick={() => handlePeriodChange('month')}
                     >
                         Месяц
                     </PeriodButton>
                     <PeriodButton
-                        active={period === '3months'}
+                        // добавлен $ в компонент
+                        $active={period === '3months'}
                         onClick={() => handlePeriodChange('3months')}
                     >
                         3 месяца
                     </PeriodButton>
                     <PeriodButton
-                        active={period === 'year'}
+                        // добавлен $ в компонент
+                        $active={period === 'year'}
                         onClick={() => handlePeriodChange('year')}
                     >
                         Год
