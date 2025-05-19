@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }) => {
         } catch (error) {
             return {
                 success: false,
-                error: error.response?.data?.error || 'Ошибка запроса',
+                error: error.response?.data?.error || 'Упс! Введенные вами данные не корректны. Введите данные корректно и повторите попытку.',
             }
         }
     }

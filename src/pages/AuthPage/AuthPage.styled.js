@@ -7,6 +7,7 @@ export const Container = styled.div`
     align-items: center;
     height: 100vh;
     background-color: #f5f5f5;
+    gap: 20px;
 `
 
 export const Card = styled.div`
@@ -16,6 +17,7 @@ export const Card = styled.div`
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 500px;
+    
 `
 
 export const Title = styled.h2`
