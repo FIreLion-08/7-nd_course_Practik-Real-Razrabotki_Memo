@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }) => {
         } catch (error) {
             return {
                 success: false,
-                error: error.response?.data?.error || 'Ошибка запроса',
+                error: error.response?.data?.error || 'Упс! Введенные вами данные не корректны. Введите данные корректно и повторите попытку.',
             }
         }
     }
@@ -69,7 +69,7 @@ export const AuthProvider = ({ children }) => {
     // Регистрация пользователя
     const register = async (name, login, password) => {
         const result = await makeAuthRequest(
-            userHost,
+            userHost + `/register`,
             { name, login, password }
         )
 

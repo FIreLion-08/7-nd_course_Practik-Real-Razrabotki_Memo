@@ -22,7 +22,7 @@ const formatDate = (dateString) => {
 }
 
 export const TableList = () => {
-    // Данные таблицы
+    // Данные таблицы запросов
     const {transactions} = useContext(TransactionsContext)
     // const expensesData = [
     //     {
@@ -114,7 +114,7 @@ export const TableList = () => {
                             <S.TableCell>{item.description}</S.TableCell>
                             <S.TableCell>{getCategoryName(item.category)}</S.TableCell>
                             <S.TableCell>{formatDate(item.date)}</S.TableCell>
-                            <S.TableCell>{item.sum}</S.TableCell>
+                            <S.TableCell>{item.sum} ₽</S.TableCell>
                         </S.TableRow>
                     ))}
                 </S.TableBody>

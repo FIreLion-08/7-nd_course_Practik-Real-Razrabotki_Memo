@@ -24,7 +24,7 @@ export const HeaderLogoImg = styled.div`
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    background-image: url('../../public/Vector.png');
+    background-image: url('../../public/Vector.svg');
 `
 
 export const MenuList = styled.ul`
@@ -46,7 +46,7 @@ export const MenuItem = styled.li`
         /* text-decoration: underline; */
         color: green;
         font-weight: 600;
-        border-bottom: 2px solid #000;
+        /* border-bottom: 2px solid #000; */
     }
 
     /* &.active {
@@ -58,22 +58,41 @@ export const MenuItem = styled.li`
 `
 
 export const HeadExpenses = styled(NavLink)`
-    width:100px;
+    width:105px;
+    display: inline-block;
+    border-bottom: 2px solid transparent;
+    padding-bottom: 2px;
+
     ${props => props.$isUsed && `
-      color: green;
-      font-weight: 600;
-      border-bottom: 2px solid green;
+        color: green;
+        font-weight: 600;
+        border-bottom: 2px solid green;
     `}
-    
+
+    &:hover {
+        color: green;
+        font-weight: 600;
+        border-bottom: 2px solid green;
+    }
 `
 
 export const HeadAnalysis = styled(NavLink)`
-    width: 126px;
+    width: 130px;
+    display: inline-block;
+    border-bottom: 2px solid transparent;
+    padding-bottom: 2px;
+
     ${props => !props.$isUsed && `
-      color: green;
-      font-weight: 600;
-      border-bottom: 2px solid green;
+        color: green;
+        font-weight: 600;
+        border-bottom: 2px solid green;
     `}
+
+    &:hover {
+        color: green;
+        font-weight: 600;
+        border-bottom: 2px solid green;
+    }
 `
 
 export const HeadExit = styled(NavLink)`
