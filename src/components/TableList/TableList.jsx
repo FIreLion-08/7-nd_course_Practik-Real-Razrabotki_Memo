@@ -211,7 +211,7 @@ export const TableList = () => {
                                 {getCategoryName(item.category)}
                             </S.TableCell>
                             <S.TableCell>{formatDate(item.date)}</S.TableCell>
-                            <S.TableCell>{item.sum}</S.TableCell>
+                            <S.TableCell>{item.sum} ₽</S.TableCell>
                         </S.TableRow>
                     ))}
                 </S.TableBody>
