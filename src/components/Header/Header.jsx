@@ -15,12 +15,10 @@ export const Header = () => {
         setIsUsed(false) // Меняем на противоположное
     }
 
-    
-
     return (
         <S.Header>
-            <Link to={'/'}>
-                <img src='../../public/Vector.svg' />
+            <Link to={'/'} onClick={handleClick} $isUsed={isUsed}>
+                <img src="../../public/Vector.svg" />
             </Link>
             <S.MenuList>
                 <S.MenuItem>
