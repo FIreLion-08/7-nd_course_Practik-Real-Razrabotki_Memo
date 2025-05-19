@@ -1,10 +1,11 @@
 import styled from 'styled-components'
 
-export const Container = styled.div`
+export const StyleAnalysis = styled.div`
     max-width: 1200px;
     margin: 0 auto;
+    background-color: #eaeef6;
 `
-export const StyleAnalysis = styled.div`
+export const StyleAnalysisExpress = styled.div`
     padding-left: 120px;
 `
 
@@ -13,7 +14,7 @@ export const Title = styled.h2`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    padding: 36px 0 32px 0;
 `
 
 export const PeriodSelector = styled.div`

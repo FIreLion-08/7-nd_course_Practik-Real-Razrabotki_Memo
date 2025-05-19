@@ -76,9 +76,9 @@ const AnalysisPage = () => {
     
 
     return (
-        <>
+        <S.StyleAnalysis>
             <Header />
-            <S.StyleAnalysis>
+            <S.StyleAnalysisExpress>
                 <S.Title>Анализ расходов</S.Title>
                 <S.PeriodSelector>
                     <S.PeriodButton
@@ -125,8 +125,8 @@ const AnalysisPage = () => {
                         )
                     )}
                 </S.Categories>
-            </S.StyleAnalysis>
-        </>
+            </S.StyleAnalysisExpress>
+        </S.StyleAnalysis>
     )
 }
 
