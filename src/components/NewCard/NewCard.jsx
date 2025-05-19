@@ -27,11 +27,11 @@ import { TransactionsContext } from '../../context/TransactionsContext'
 
 export const NewCard = () => {
     const { user } = useContext(AuthContext)
-    const { addTransaction } = useContext(TransactionsContext) // Получаем функцию добавления транзакции
+    const { addTransaction, setTransactions } = useContext(TransactionsContext) // Получаем функцию добавления транзакции
     const [activeCategory, setActiveCategory] = useState(null)
-    console.log(activeCategory)
+    
     const Token = user.user.token
-    console.log(Token)
+    
 
     const [formData, setFormData] = useState({
         description: '',
@@ -77,7 +77,7 @@ export const NewCard = () => {
             setDateError(value.length > 0)
         }
     }
-console.log('sdsdasd')
+
     const handleChange = (e) => {
         const { name, value } = e.target
         setFormData((prev) => ({
@@ -107,6 +107,7 @@ console.log('sdsdasd')
         try {
             const response = await postTransaction(Token, formData)
             console.log(response)
+            setTransactions(response)
 
             // Добавляем новую транзакцию в контекст
             addTransaction({

@@ -12,7 +12,8 @@ export async function postTransaction(token, newTransaction) {
         },
       }
     );
-    return data.data.tasks;
+    
+    return data.data.transactions;
   } catch (error) {
     throw new Error(error.message);
   }
