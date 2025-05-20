@@ -1,5 +1,4 @@
 import * as S from './AuthForm.styled.js'
-// import { useState, useContext, useEffect } from 'react'
 import { useState, useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import Button from '../Button'
@@ -19,6 +18,20 @@ const AuthForm = ({ isLogin, onSuccess }) => {
         ? formData.login && formData.password
         : formData.name && formData.login && formData.password
 
+    const validateAuthForm = () => {
+        if (!isLogin) {
+            if (formData.login.length < 3) {
+                setError('Логин должен содержать хотя бы 3 символа')
+                return false
+            }
+            if (formData.password.length < 3) {
+                setError('Пароль должен содержать хотя бы 3 символа')
+                return false
+            }
+        }
+        return true
+    }
+
     const handleChange = (e) => {
         const { name, value } = e.target
         setFormData((prev) => ({ ...prev, [name]: value }))
@@ -28,6 +41,11 @@ const AuthForm = ({ isLogin, onSuccess }) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (!isFormValid) return // Дополнительная проверка на валидность
+
+        if (!isLogin && !validateAuthForm()) {
+            return
+        }
+
         setError('')
         setIsSubmitting(true)
 

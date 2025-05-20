@@ -72,7 +72,7 @@ const AnalysisPage = () => {
         return acc
     }, {})
 
-    if (isLoading) return <div>Загрузка...</div>
+    // if (isLoading) return <div>Загрузка...</div>
     
 
     return (

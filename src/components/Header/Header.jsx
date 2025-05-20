@@ -18,7 +18,7 @@ export const Header = () => {
     return (
         <S.Header>
             <Link to={'/'} onClick={handleClick} $isUsed={isUsed}>
-                <img src="../../public/Vector.svg" />
+                <img src="./Vector.svg" />
             </Link>
             <S.MenuList>
                 <S.MenuItem>

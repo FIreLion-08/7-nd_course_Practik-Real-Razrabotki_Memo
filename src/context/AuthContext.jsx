@@ -21,16 +21,19 @@ export const AuthProvider = ({ children }) => {
 
     const verifyAuth = async (token) => {
         try {
-            const response = await axios.get(
-                userHost,
-                {
-                    headers: { Authorization: `Bearer ${token}` },
-                }
-            )
+            const response = await axios.get(userHost, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
             setUser(response.data.user)
         } catch (error) {
             console.error('Auth verification failed:', error)
-            localStorage.removeItem('token')
+            // localStorage.removeItem('token')
+            if (error.response?.status === 401) {
+                // Токен недействителен
+                localStorage.removeItem('token')
+            } else if (error.response?.status === 500) {
+                console.error('Server error during auth verification')
+            }
         } finally {
             setIsLoading(false)
         }
@@ -39,26 +42,50 @@ export const AuthProvider = ({ children }) => {
     // Универсальный метод для авторизационных запросов
     const makeAuthRequest = async (url, data) => {
         try {
-            const res = await fetch (url, {
-                method: 'post',
-                body: JSON.stringify(data)
+            const res = await fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(data),
             })
-            const response =await res.json()
-            return { success: true, data: response}
+
+            if (!res.ok) {
+                const errorData = await res.json()
+                if (res.status === 400) {
+                    return {
+                        success: false,
+                        error:
+                            errorData.error ||
+                            'Такой пользователь уже существует',
+                    }
+                } else if (res.status === 500) {
+                    return {
+                        success: false,
+                        error: 'Ошибка сервера',
+                    }
+                }
+                return {
+                    success: false,
+                    error:
+                        errorData.error ||
+                        'Упс! Введенные вами данные не корректны.    Введите данные корректно и повторите попытку.',
+                }
+            }
+
+            const response = await res.json()
+            return { success: true, data: response }
         } catch (error) {
             return {
                 success: false,
-                error: error.response?.data?.error || 'Упс! Введенные вами данные не корректны. Введите данные корректно и повторите попытку.',
+                error: 'Ошибка сервера',
             }
         }
     }
 
     // Вход пользователя
     const loginAut = async (login, password) => {
-        const result = await makeAuthRequest(
-            userHost + `/login`,
-            { login, password }
-        )
+        const result = await makeAuthRequest(userHost + `/login`, {
+            login,
+            password,
+        })
         if (result.success) {
             localStorage.setItem('token', result.data.user.token)
             setUser(result.data)
@@ -68,13 +95,14 @@ export const AuthProvider = ({ children }) => {
 
     // Регистрация пользователя
     const register = async (name, login, password) => {
-        const result = await makeAuthRequest(
-            userHost,
-            { name, login, password }
-        )
+        const result = await makeAuthRequest(userHost, {
+            name,
+            login,
+            password,
+        })
 
         if (result.success) {
-            localStorage.setItem('token', result.data.user.token)  //Исправление регистрации
+            localStorage.setItem('token', result.data.user.token) //Исправление регистрации
             // localStorage.setItem('token', result.data.token)
             setUser(result.data)
             // setUser(result.user.data)
