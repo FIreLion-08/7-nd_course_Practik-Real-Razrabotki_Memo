@@ -1,5 +1,6 @@
 import * as S from './AuthForm.styled.js'
-import { useState, useContext, useEffect } from 'react'
+// import { useState, useContext, useEffect } from 'react'
+import { useState, useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import Button from '../Button'
 import Input from '../Input'
