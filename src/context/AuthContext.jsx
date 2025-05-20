@@ -69,13 +69,13 @@ export const AuthProvider = ({ children }) => {
     // Регистрация пользователя
     const register = async (name, login, password) => {
         const result = await makeAuthRequest(
-            userHost + `/register`,
+            userHost,
             { name, login, password }
         )
 
         if (result.success) {
-            localStorage.setItem('token', result.data.token)
-            setUser(result.data.user)
+            localStorage.setItem('token', result.data.user.token)
+            setUser(result.data)
         }
         return result
     }
