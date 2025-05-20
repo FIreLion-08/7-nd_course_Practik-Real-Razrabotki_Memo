@@ -13,7 +13,7 @@ export const Container = styled.div`
 export const Card = styled.div`
     background-color: #fff;
     padding: 40px;
-    border-radius: 8px;
+    border-radius: 30px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 500px;

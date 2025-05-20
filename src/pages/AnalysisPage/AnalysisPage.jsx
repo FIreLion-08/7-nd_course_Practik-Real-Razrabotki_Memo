@@ -13,7 +13,8 @@ const AnalysisPage = () => {
     const [transactionsData, setTransactionsData] = useState([])
     console.log('transactionsData', transactionsData)
 
-    const [isLoading, setIsLoading] = useState(false)
+    // const [isLoading, setIsLoading] = useState(false)
+    const [setIsLoading] = useState(false)
     const { fetchPeriodTransactions } = useContext(TransactionsContext)
     console.log('fetchPeriodTransactions', fetchPeriodTransactions)
 
