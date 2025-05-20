@@ -8,6 +8,11 @@ const userHost = 'https://wedev-api.sky.pro/api/user'
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
+    const [savedAuthData, setSavedAuthData] = useState(() => {
+        // Загружаем сохраненные данные формы из localStorage при инициализации
+        const saved = localStorage.getItem('authFormData')
+        return saved ? JSON.parse(saved) : { login: '', password: '' }
+    })
 
     // Проверка авторизации при загрузке
     useEffect(() => {
@@ -27,7 +32,6 @@ export const AuthProvider = ({ children }) => {
             setUser(response.data.user)
         } catch (error) {
             console.error('Auth verification failed:', error)
-            // localStorage.removeItem('token')
             if (error.response?.status === 401) {
                 // Токен недействителен
                 localStorage.removeItem('token')
@@ -37,6 +41,22 @@ export const AuthProvider = ({ children }) => {
         } finally {
             setIsLoading(false)
         }
+    }
+
+    // Сохраняем данные формы в localStorage и состояние
+    const saveAuthData = (data) => {
+        const dataToSave = { 
+            login: data.login || '', 
+            password: data.password || '' 
+        }
+        localStorage.setItem('authFormData', JSON.stringify(dataToSave))
+        setSavedAuthData(dataToSave)
+    }
+
+    // Очищаем сохраненные данные формы
+    const clearSavedAuthData = () => {
+        localStorage.removeItem('authFormData')
+        setSavedAuthData({ login: '', password: '' })
     }
 
     // Универсальный метод для авторизационных запросов
@@ -89,6 +109,11 @@ export const AuthProvider = ({ children }) => {
         if (result.success) {
             localStorage.setItem('token', result.data.user.token)
             setUser(result.data)
+            // Очищаем сохраненные данные формы после успешного входа
+            clearSavedAuthData()
+        } else {
+            // Сохраняем данные формы при неудачной попытке входа
+            saveAuthData({ login, password })
         }
         return result
     }
@@ -106,6 +131,11 @@ export const AuthProvider = ({ children }) => {
             // localStorage.setItem('token', result.data.token)
             setUser(result.data)
             // setUser(result.user.data)
+            // Очищаем сохраненные данные формы после успешной регистрации
+            saveAuthData({ login, password })
+        } else {
+            // Сохраняем данные формы при неудачной попытке регистрации
+            saveAuthData({ login, password })
         }
         return result
     }
@@ -118,7 +148,15 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider
-            value={{ user, isLoading, loginAut, register, logout }}
+            // value={{ user, isLoading, loginAut, register, logout }}
+            value={{ 
+                user, 
+                isLoading, 
+                loginAut, 
+                register, 
+                logout,
+                savedAuthData // Добавляем сохраненные данные формы в контекст
+            }}
         >
             {children}
         </AuthContext.Provider>

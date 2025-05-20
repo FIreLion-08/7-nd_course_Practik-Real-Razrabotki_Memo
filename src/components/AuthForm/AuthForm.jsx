@@ -1,14 +1,16 @@
 import * as S from './AuthForm.styled.js'
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import Button from '../Button'
 import Input from '../Input/Input.jsx'
 
 const AuthForm = ({ isLogin, onSuccess }) => {
+    const { loginAut, register, savedAuthData } = useContext(AuthContext)
+    
     const [formData, setFormData] = useState({
         name: '',
-        login: '',
-        password: '',
+        login: savedAuthData.login || '',
+        password: savedAuthData.password || '',
     })
     const [error, setError] = useState('')
     const [fieldErrors, setFieldErrors] = useState({
@@ -22,7 +24,22 @@ const AuthForm = ({ isLogin, onSuccess }) => {
         password: false,
     })
     const [isSubmitting, setIsSubmitting] = useState(false)
-    const { loginAut, register } = useContext(AuthContext)
+
+    // При монтировании компонента проверяем сохраненные данные
+    useEffect(() => {
+        if (savedAuthData.login) {
+            setFieldValidity(prev => ({
+                ...prev,
+                login: validateField('login', savedAuthData.login)
+            }))
+        }
+        if (savedAuthData.password) {
+            setFieldValidity(prev => ({
+                ...prev,
+                password: validateField('password', savedAuthData.password)
+            }))
+        }
+    }, [savedAuthData])
 
     const validateField = (name, value) => {
         switch (name) {
