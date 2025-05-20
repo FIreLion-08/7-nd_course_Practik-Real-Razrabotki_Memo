@@ -74,7 +74,7 @@ export const AuthProvider = ({ children }) => {
         )
 
         if (result.success) {
-            localStorage.setItem('token', result.data.user.token)
+            localStorage.setItem('token', result.data.user.token)  //Исправление регистрации
             // localStorage.setItem('token', result.data.token)
             setUser(result.data)
             // setUser(result.user.data)
