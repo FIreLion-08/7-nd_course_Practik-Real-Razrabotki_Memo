@@ -27,11 +27,11 @@ import { TransactionsContext } from '../../context/TransactionsContext'
 
 export const NewCard = () => {
     const { user } = useContext(AuthContext)
-    const { addTransaction, setTransactions } = useContext(TransactionsContext) // Получаем функцию добавления транзакции
+    const { addTransaction, setTransactions, isEdit, transaction, setTransaction } = useContext(TransactionsContext) // Получаем функцию добавления транзакции
     const [activeCategory, setActiveCategory] = useState(null)
-    
+
     const Token = user.user.token
-    
+
 
     const [formData, setFormData] = useState({
         description: '',
@@ -130,21 +130,64 @@ export const NewCard = () => {
         }
     }
 
+    const handleEditTransaction = async (id) => {
+        try {
+            const response = await fetch(`https://wedev-api.sky.pro/api/transactions/${id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                },
+                body: JSON.stringify({
+                    category: 'food',
+                    description: 'Яндекс Такси',
+                    date: '03.07.2024',
+                    sum: 730,
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`Ошибка: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log('Транзакция успешно отредактирована:', data);
+
+        } catch (error) {
+            console.error('Ошибка при редактировании транзакции:', error);
+        }
+    };
+
     useEffect(() => {
         setFormData((prev) => ({ ...prev, category: activeCategory }))
     }, [activeCategory])
 
     return (
         <CardBox>
-            <CardHeader>Новый расход</CardHeader>
+            <CardHeader>{!isEdit ? "Новый расход" : "Редактирования"}</CardHeader>
             <CardForm onSubmit={handleSubmit}>
                 <CardFormHeader>Описание</CardFormHeader>
-                <CardFormDiscription
-                    name="description"
-                    value={formData.description}
-                    onChange={handleChange}
-                    placeholder="Введите описание"
-                />
+                {!isEdit && (
+                    <CardFormDiscription
+                        name="description"
+                        value={!isEdit ? formData.description : transaction.description}
+                        onChange={handleChange}
+                        placeholder="Введите описание"
+                    />
+                )}
+                {isEdit && (
+                    <CardFormDiscription
+                        name="description"
+                        value={!isEdit ? formData.description : transaction.description}
+                        onChange={(e) =>
+                            setTransaction({
+                                ...transaction,
+                                description: e.target.value,
+                            })
+                        }
+                        placeholder="Введите описание"
+                    />
+                )}
+
                 <CardCategoryHeader>Категория</CardCategoryHeader>
                 <CardCategoryItems>
                     <CardCategoryItemFood
@@ -319,9 +362,14 @@ export const NewCard = () => {
                     placeholder="Введите сумму"
                 />
             </CardForm>
-            <CardFormButton onClick={handleSubmit}>
+            {!isEdit && <CardFormButton onClick={handleSubmit}>
                 Добавить новый расход
             </CardFormButton>
+            }
+            {isEdit && <CardFormButton onClick={handleEditTransaction}>
+                Сохранить редактирование
+            </CardFormButton>
+            }
         </CardBox>
     )
 }
