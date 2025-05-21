@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }) => {
         } catch (error) {
             return {
                 success: false,
-                error: error.response?.data?.error || 'Ошибка запроса',
+                error: error.response?.data?.error || 'Упс! Введенные вами данные не корректны. Введите данные корректно и повторите попытку.',
             }
         }
     }
@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }) => {
         )
         if (result.success) {
             localStorage.setItem('token', result.data.user.token)
-            setUser(result.data.user.name)
+            setUser(result.data)
         }
         return result
     }
@@ -74,8 +74,8 @@ export const AuthProvider = ({ children }) => {
         )
 
         if (result.success) {
-            localStorage.setItem('token', result.data.token)
-            setUser(result.data.user)
+            localStorage.setItem('token', result.data.user.token)
+            setUser(result.data)
         }
         return result
     }

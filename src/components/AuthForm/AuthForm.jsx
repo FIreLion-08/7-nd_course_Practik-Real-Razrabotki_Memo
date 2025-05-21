@@ -1,5 +1,5 @@
-// import styled from 'styled-components'
 import * as S from './AuthForm.styled.js'
+// import { useState, useContext, useEffect } from 'react'
 import { useState, useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import Button from '../Button'
@@ -15,33 +15,44 @@ const AuthForm = ({ isLogin, onSuccess }) => {
     const [isSubmitting, setIsSubmitting] = useState(false)
     const { loginAut, register } = useContext(AuthContext)
 
+    const isFormValid = isLogin
+        ? formData.login && formData.password
+        : formData.name && formData.login && formData.password
+
     const handleChange = (e) => {
         const { name, value } = e.target
         setFormData((prev) => ({ ...prev, [name]: value }))
+        setError('')
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        if (!isFormValid) return // Дополнительная проверка на валидность
         setError('')
         setIsSubmitting(true)
 
-        let result
-        if (isLogin) {
-            result = await loginAut(formData.login, formData.password)
-        } else {
-            result = await register(
-                formData.name,
-                formData.login,
-                formData.password
-            )
-        }
+        try {
+            let result
+            if (isLogin) {
+                result = await loginAut(formData.login, formData.password)
+            } else {
+                result = await register(
+                    formData.name,
+                    formData.login,
+                    formData.password
+                )
+            }
 
-        if (!result.success) {
-            setError(result.error)
+            if (result.success) {
+                onSuccess()
+            } else {
+                setError(result.error || 'Произошла неизвестная ошибка')
+            }
+        } catch (err) {
+            setError('Неверный логин или пароль')
+        } finally {
+            setIsSubmitting(false)
         }
-
-        setIsSubmitting(false)
-        onSuccess()
     }
 
     return (
@@ -73,7 +84,7 @@ const AuthForm = ({ isLogin, onSuccess }) => {
                 required
             />
             {error && <S.ErrorMessage>{error}</S.ErrorMessage>}
-            <Button type="submit" disabled={isSubmitting}>
+            <Button type="submit" disabled={!isFormValid || isSubmitting}>
                 {isLogin ? 'Войти' : 'Зарегистрироваться'}
             </Button>
         </S.Form>
