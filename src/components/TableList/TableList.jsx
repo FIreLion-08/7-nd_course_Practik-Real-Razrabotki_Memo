@@ -25,7 +25,7 @@ const formatDate = (dateString) => {
 
 export const TableList = () => {
     // Данные таблицы
-    const { transactions, filtredCategory, sortedCategory, setTransaction, setIsEdit } =
+    const { transactions, filtredCategory, sortedCategory, setTransaction, setIsEdit, setActiveCategory } =
         useContext(TransactionsContext)
     const [isOpenModWin, setIsOpenModWin] = useState(false)
     const [isOpenSortModWin, setIsOpenSortModWin] = useState(false)
@@ -154,6 +154,7 @@ export const TableList = () => {
         const transaction = transactions.find((item) => item._id === id);
         console.log(transaction)
         setTransaction(transaction);
+        setActiveCategory(transaction.category);
         setIsEdit(true);
         return transaction;
     };

@@ -16,6 +16,7 @@ export const TransactionsProvider = ({ children }) => {
     const [sortedCategory, setSortedCategory] = useState(null)
     const [isEdit, setIsEdit] = useState(false)
     const [transaction, setTransaction] = useState(null)
+     const [activeCategory, setActiveCategory] = useState(null)
     const fetchTransactions = async (params = {}) => {
         if (!user) return
 
@@ -149,6 +150,8 @@ export const TransactionsProvider = ({ children }) => {
                 setIsEdit,
                 transaction,
                 setTransaction,
+                activeCategory, 
+                setActiveCategory,
             }}
         >
             {children}
