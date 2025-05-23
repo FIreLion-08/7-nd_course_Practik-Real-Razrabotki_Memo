@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { useState } from 'react'
 import Button from './Button'
-import Input from './Input'
+import Input from './Input/Input'
 import { CATEGORIES } from '../constants/categories'
 
 const Form = styled.form`
