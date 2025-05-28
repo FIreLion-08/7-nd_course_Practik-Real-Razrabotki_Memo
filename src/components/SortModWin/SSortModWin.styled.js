@@ -8,8 +8,9 @@ min-width: 106px;
 border: 0.5px solid rgba(153, 153, 153, 1);
 border-radius: 6px;
 box-shadow: 0px 20px 67px -12px #00000021;
-top: 235px;
-left: 785px;
+margin-top: 6px;
+top: 215px;
+/* left: 785px; */
 z-index: 2;
 display: flex;
 flex-direction: column;

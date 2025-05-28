@@ -88,21 +88,26 @@ export const SCategory = styled.span`
     color: rgba(31, 164, 108, 1);
 `
 export const SFilterCategory = styled.p`
-cursor: pointer;
-font-weight: 400;
-font-size: 12px;
-line-height: 150%;
-letter-spacing: 0px;
-text-align: center;
-vertical-align: middle;
+    cursor: pointer;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+    letter-spacing: 0px;
+    text-align: center;
+    vertical-align: middle;
 `
 export const SSortTransaction = styled.p`
-cursor: pointer;
-font-weight: 400;
-font-size: 12px;
-line-height: 150%;
-letter-spacing: 0px;
-text-align: center;
-vertical-align: middle;
+    cursor: pointer;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+    letter-spacing: 0px;
+    text-align: center;
+    vertical-align: middle;
+`
 
+export const ModWinPos = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end
 `

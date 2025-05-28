@@ -11,9 +11,13 @@ export const TransactionsProvider = ({ children }) => {
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
     const [isUsed, setIsUsed] = useState(true)
-     const [filtredCategory, setFiltredCategory] = useState(null)
+    const [filtredCategory, setFiltredCategory] = useState(null)
     const { user } = useContext(AuthContext)
-   const [sortedCategory, setSortedCategory] = useState(null)
+    const [sortedCategory, setSortedCategory] = useState(null)
+    const [period, setPeriod] = useState({
+        start: '',
+        end: '',
+    })
 
     const fetchTransactions = async (params = {}) => {
         if (!user) return
@@ -142,8 +146,10 @@ export const TransactionsProvider = ({ children }) => {
                 setTransactions,
                 filtredCategory,
                 setFiltredCategory,
-                sortedCategory, 
-                setSortedCategory
+                sortedCategory,
+                setSortedCategory,
+                period,
+                setPeriod,
             }}
         >
             {children}
