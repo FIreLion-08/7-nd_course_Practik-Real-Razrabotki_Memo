@@ -22,16 +22,18 @@ import {
 } from './StyledNewCard'
 import { postTransaction } from '../../api'
 import { AuthContext } from '../../context/AuthContext'
-import { format, parse, isValid } from 'date-fns'
+import { format, parse, isValid, getDate, getYear, formatDate } from 'date-fns'
 import { TransactionsContext } from '../../context/TransactionsContext'
-
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { ru } from 'date-fns/locale'
 export const NewCard = () => {
     const { user } = useContext(AuthContext)
-    const { addTransaction, setTransactions } = useContext(TransactionsContext) // Получаем функцию добавления транзакции
-    const [activeCategory, setActiveCategory] = useState(null)
-    
+    const { addTransaction, setTransactions, isEdit, transaction, setTransaction, activeCategory, setActiveCategory } = useContext(TransactionsContext) // Получаем функцию добавления транзакции
+
+    const [dateInput, setDateInput] = useState('')
     const Token = user.user.token
-    
+
 
     const [formData, setFormData] = useState({
         description: '',
@@ -40,8 +42,11 @@ export const NewCard = () => {
         date: '',
     })
 
-    const [dateInput, setDateInput] = useState('')
+
     const [dateError, setDateError] = useState(false)
+    const [selectedDate, setSelectedDate] = useState(null);
+
+
 
     const handleDateChange = (e) => {
         let value = e.target.value
@@ -85,14 +90,16 @@ export const NewCard = () => {
             [name]:
                 name === 'sum'
                     ? value === ''
-                        ? 0 // если поле пустое, ставим 0 (или можно оставить пустую строку)
+                        ? null // если поле пустое, ставим 0 (или можно оставить пустую строку)
                         : Number(value) // преобразуем строку в число
                     : value, // остальные поля без изменений
         }))
-
         // setErrors({ ...errors, [name]: false });
         // setError("");
     }
+
+
+
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -109,13 +116,8 @@ export const NewCard = () => {
             console.log(response)
             setTransactions(response)
 
-            // Добавляем новую транзакцию в контекст
-            addTransaction({
-                ...formData,
-                amount: formData.sum, // Используем sum как amount для совместимости с TableList
-                _id: Date.now().toString(), // Временный ID, пока не получим ответ от сервера
-                date: dateInput, // Используем отформатированную дату для отображения
-            })
+
+
         } catch (err) {
             console.log(err.message)
         } finally {
@@ -130,21 +132,72 @@ export const NewCard = () => {
         }
     }
 
+    const handleEditTransaction = async (id) => {
+        try {
+            const response = await fetch(`https://wedev-api.sky.pro/api/transactions/${id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                },
+                body: JSON.stringify({
+                    category: 'food',
+                    description: 'Яндекс Такси',
+                    date: '03.07.2024',
+                    sum: 730,
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`Ошибка: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log('Транзакция успешно отредактирована:', data);
+
+        } catch (error) {
+            console.error('Ошибка при редактировании транзакции:', error);
+        }
+    };
+
+    const formatDateFns = (date) => {
+        return format(date, "dd.MM.yyyy");
+    };
+    
+
+
     useEffect(() => {
         setFormData((prev) => ({ ...prev, category: activeCategory }))
     }, [activeCategory])
 
+
+
     return (
         <CardBox>
-            <CardHeader>Новый расход</CardHeader>
+            <CardHeader>{!isEdit ? "Новый расход" : "Редактирования"}</CardHeader>
             <CardForm onSubmit={handleSubmit}>
                 <CardFormHeader>Описание</CardFormHeader>
-                <CardFormDiscription
-                    name="description"
-                    value={formData.description}
-                    onChange={handleChange}
-                    placeholder="Введите описание"
-                />
+                {!isEdit && (
+                    <CardFormDiscription
+                        name="description"
+                        value={formData.description}
+                        onChange={handleChange}
+                        placeholder="Введите описание"
+                    />
+                )}
+                {isEdit && (
+                    <CardFormDiscription
+                        name="description"
+                        value={transaction.description}
+                        onChange={(e) =>
+                            setTransaction({
+                                ...transaction,
+                                description: e.target.value,
+                            })
+                        }
+                        placeholder="Введите описание"
+                    />
+                )}
+
                 <CardCategoryHeader>Категория</CardCategoryHeader>
                 <CardCategoryItems>
                     <CardCategoryItemFood
@@ -297,31 +350,77 @@ export const NewCard = () => {
                     </CardCategoryItemOthers>
                 </CardCategoryItems>
                 <CardDateHeader>Дата</CardDateHeader>
-                <CardFormDate
-                    name="date"
-                    value={dateInput} // было value={formData.date}
-                    onChange={handleDateChange} // onChange={handleChange}
-                    placeholder="Введите дату (дд.мм.гггг)"
-                    maxLength="10"
-                    $hasError={dateError}
-                />
+                {!isEdit && (
+                    <DatePicker
+                        selected={selectedDate}
+                        onChange={date => setSelectedDate(date)}
+                        dateFormat="dd.MM.yyyy"
+                        placeholderText="Выберите дату"
+                        className="custom-date-input"
+                        showYearDropdown
+                        dropdownMode="select"
+                        locale="ru"
+                        isClearable
+                    />
+                )}
+                {isEdit && (
+                    <CardFormDate
+                        name="date"
+                        value={formatDateFns(transaction.date)}
+
+                        onChange={(e) =>
+                            setTransaction({
+                                ...transaction,
+                                date: e.target.value,
+
+                            })
+
+                        } // onChange={handleChange}
+                        placeholder="Введите дату (дд.мм.гггг)"
+                        maxLength="10"
+                        $hasError={dateError}
+                    />
+                )}
                 {dateError && (
                     <div style={{ color: 'red', fontSize: '12px' }}>
                         Введите корректную дату в формате дд.мм.гггг
                     </div>
                 )}
                 <CardSumHeader>Сумма</CardSumHeader>
-                <CardFormSum
-                    type="number"
-                    name="sum"
-                    value={formData.sum}
-                    onChange={handleChange}
-                    placeholder="Введите сумму"
-                />
+                {!isEdit && (
+                    <CardFormSum
+                        type="number"
+                        name="sum"
+                        min={0}
+                        value={formData.sum}
+                        onChange={handleChange}
+                        placeholder="Введите сумму"
+                    />
+                )}
+                {isEdit && (
+                    <CardFormSum
+                        type="number"
+                        name="sum"
+                        min={0}
+                        value={transaction.sum}
+                        onChange={(e) =>
+                            setTransaction({
+                                ...transaction,
+                                sum: e.target.value,
+                            })
+                        }
+                        placeholder="Введите сумму"
+                    />
+                )}
             </CardForm>
-            <CardFormButton onClick={handleSubmit}>
+            {!isEdit && <CardFormButton onClick={handleSubmit}>
                 Добавить новый расход
             </CardFormButton>
+            }
+            {isEdit && <CardFormButton onClick={handleEditTransaction}>
+                Сохранить редактирование
+            </CardFormButton>
+            }
         </CardBox>
     )
 }

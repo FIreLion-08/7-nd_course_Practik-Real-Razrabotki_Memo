@@ -8,9 +8,21 @@ const userHost = 'https://wedev-api.sky.pro/api/user'
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
-
+    
+    const refreshToken = async () => {
+  const refresh = localStorage.getItem('refreshToken')
+  if (!refresh) return false
+  
+  try {
+    const response = await axios.post(`${userHost}/refresh`, { refresh })
+    localStorage.setItem('token', response.data.token)
+    return true
+  } catch (error) {
+    return false
+  }
+}
     // Проверка авторизации при загрузке
-    useEffect(() => {
+     useEffect(() => {
         const token = localStorage.getItem('token')
         if (token) {
             verifyAuth(token)
@@ -21,20 +33,26 @@ export const AuthProvider = ({ children }) => {
 
     const verifyAuth = async (token) => {
         try {
-            const response = await axios.get(
-                userHost,
-                {
-                    headers: { Authorization: `Bearer ${token}` },
+            const response = await axios.get(`${userHost}/me`, {
+                headers: { 
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json'
                 }
-            )
-            setUser(response.data.user)
+            })
+            setUser({
+                ...response.data.user,
+                token // Сохраняем токен в состоянии
+            })
         } catch (error) {
             console.error('Auth verification failed:', error)
             localStorage.removeItem('token')
+            setUser(null)
         } finally {
             setIsLoading(false)
         }
     }
+
+
 
     // Универсальный метод для авторизационных запросов
     const makeAuthRequest = async (url, data) => {

@@ -106,3 +106,29 @@ text-align: center;
 vertical-align: middle;
 
 `
+export const SButtonDelete = styled.button`
+cursor: pointer;
+font-weight: 400;
+font-size: 12px;
+line-height: 150%;
+letter-spacing: 0px;
+text-align: center;
+vertical-align: middle;
+background-color: rgb(255, 255, 255);
+border: none;
+padding: 0;
+margin-left: 6px;
+`
+export const SButtonEdit = styled.button`
+cursor: pointer;
+font-weight: 400;
+font-size: 12px;
+line-height: 150%;
+letter-spacing: 0px;
+text-align: center;
+vertical-align: middle;
+background-color: rgb(255, 255, 255);
+border: none;
+padding: 0;
+margin-right: 6px
+`
