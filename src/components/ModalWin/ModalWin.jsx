@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import {
     CardCategoryItemEducation,
     CardCategoryItemFood,
@@ -10,45 +10,10 @@ import {
     ModalBox,
 } from './SModalWin.styled'
 import { TransactionsContext } from '../../context/TransactionsContext'
-import axios from 'axios'
-import { AuthContext } from '../../context/AuthContext'
 
 export const ModalWin = () => {
-    const { filtredCategory, setFiltredCategory, setTransactions, fetchTransactions } =
+    const { filtredCategory, setFiltredCategory } =
         useContext(TransactionsContext)
-        const {user} = useContext(AuthContext)
-        const Token = user.user.token
-        console.log(Token);
-        
-        
-    async function filteredWithCategory() {
-  try {
-    const response = await axios.get(
-      `https://wedev-api.sky.pro/api/transactions?filterBy=${filtredCategory}`,
-      {
-       
-        headers: {
-          Authorization: "Bearer " + Token,
-          "Content-Type": "text/html",
-        }
-      }
-    );
-    console.log(response.data);
-    
-    setTransactions(response.data);
-  } catch (error) {
-    console.error('Ошибка фильтрации:', error);
-    throw error; // Пробрасываем ошибку дальше
-  }
-}
-
-useEffect(() => {
-  if (filtredCategory) { 
-    filteredWithCategory();
-  } else {
-    fetchTransactions()
-  }
-}, [filtredCategory])
 
     return (
         <ModalBox>

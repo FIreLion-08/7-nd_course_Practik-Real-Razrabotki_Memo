@@ -4,6 +4,8 @@ import { TransactionsContext } from '../../context/TransactionsContext.jsx'
 import { getCategoryName } from '../../constants/categories.js'
 import { ModalWin } from '../ModalWin/ModalWin.jsx'
 import { SortModWin } from '../SortModWin/SortModWin.jsx'
+import { filtered, filteredAndSort, sorted } from '../../api.js'
+import { AuthContext } from '../../context/AuthContext.jsx'
 
 const formatDate = (dateString) => {
     if (!dateString) return ''
@@ -25,59 +27,14 @@ const formatDate = (dateString) => {
 
 export const TableList = () => {
     // Данные таблицы
-    const { transactions, filtredCategory, sortedCategory } =
+    const { transactions, filtredCategory, sortedCategory, setTransactions, fetchTransactions } =
         useContext(TransactionsContext)
+    const { user } = useContext(AuthContext)
+    const Token = user.user.token
     const [isOpenModWin, setIsOpenModWin] = useState(false)
     const [isOpenSortModWin, setIsOpenSortModWin] = useState(false)
     const [category, setCategory] = useState('')
     const [sort, setSort] = useState('')
-    // const expensesData = [
-    //     {
-    //         id: 1,
-    //         description: 'Пятерочка',
-    //         category: 'Еда',
-    //         date: '03.07.2024',
-    //         amount: '3 500 ₽',
-    //     },
-    //     {
-    //         id: 2,
-    //         description: 'Яндекс Такси',
-    //         category: 'Транспорт',
-    //         date: '03.07.2024',
-    //         amount: '730 ₽',
-    //     },
-    // ]
-
-    // Состояния для фильтрации и сортировки
-    const [selectedCategory, setSelectedCategory] = useState('Все')
-    const [sortOrder, setSortOrder] = useState('newest')
-
-    // Уникальные категории для фильтра
-    const categories = useMemo(() => {
-        const uniqueCategories = new Set(
-            transactions.map((item) => getCategoryName(item.category))
-        )
-        return ['Все', ...uniqueCategories]
-    }, [transactions])
-
-    // Фильтрация и сортировка данных
-    const processedData = useMemo(() => {
-        // Фильтрация
-        const filtered =
-            selectedCategory === 'Все'
-                ? transactions
-                : transactions.filter(
-                      (item) =>
-                          getCategoryName(item.category) === selectedCategory
-                  )
-
-        // Сортировка
-        return [...filtered].sort((a, b) => {
-            const dateA = new Date(a.date.split('.').reverse().join('-'))
-            const dateB = new Date(b.date.split('.').reverse().join('-'))
-            return sortOrder === 'newest' ? dateB - dateA : dateA - dateB
-        })
-    }, [transactions, selectedCategory, sortOrder])
 
     useEffect(() => {
         switch (filtredCategory) {
@@ -129,13 +86,64 @@ export const TableList = () => {
         }
     }, [sortedCategory])
 
+    useEffect(() => {
+        const fetchData = async () => {
+            if (filtredCategory && sortedCategory) {
+                
+                try {
+                    const response = await filteredAndSort(
+                        filtredCategory,
+                        sortedCategory,
+                        Token
+                    )
+                    setTransactions(response)
+                    
+                } catch (err) {
+                    console.error('Ошибка:', err.message)
+                    
+                }
+            } else if (filtredCategory) {
+                try {
+                    const response = await filtered(
+                        filtredCategory,
+                        Token
+                    )
+                    setTransactions(response)
+                    
+                } catch (err) {
+                    console.error('Ошибка:', err.message)
+                    
+                }
+            } else if (sortedCategory){
+                try {
+                    const response = await sorted(
+                        sortedCategory,
+                        Token
+                    )
+                    setTransactions(response)
+                    
+                } catch (err) {
+                    console.error('Ошибка:', err.message)
+                    
+                }
+            } else {
+                fetchTransactions()
+            }
+        }
+        fetchData()
+    }, [filtredCategory, sortedCategory])
+
     return (
         <S.TableBox>
             <S.TableHeader>
                 <S.TitleHeader>Таблица расходов</S.TitleHeader>
                 <S.FilterControls>
-                    <S.SFilterCategory
-                        onClick={() => setIsOpenModWin((prev) => !prev)}
+                    <S.ModWinPos><S.SFilterCategory
+                        onClick={() => {setIsOpenModWin((prev) => !prev)
+                            setIsOpenSortModWin(false)
+                        }
+                            
+                        }
                     >
                         Фильтровать по категории{' '}
                         {category && <S.SCategory>{category}</S.SCategory>}{' '}
@@ -153,18 +161,13 @@ export const TableList = () => {
                         </svg>
                     </S.SFilterCategory>
                     {isOpenModWin && <ModalWin />}
-                    {/* <S.FilterSelect
-                        value={selectedCategory}
-                        onChange={(e) => setSelectedCategory(e.target.value)}
-                    >
-                        {categories.map((category) => (
-                            <option key={category} value={category}>
-                                {category}
-                            </option>
-                        ))}
-                    </S.FilterSelect> */}
-                    <S.SSortTransaction
-                        onClick={() => setIsOpenSortModWin((prev) => !prev)}
+                    </S.ModWinPos>
+                    
+                    <S.ModWinPos>
+<S.SSortTransaction
+                        onClick={() => {setIsOpenSortModWin((prev) => !prev)
+                            setIsOpenModWin(false)
+                        }}
                     >
                         Сортировать по{' '}
                         {sort && <S.SCategory>{sort}</S.SCategory>}{' '}
@@ -182,14 +185,8 @@ export const TableList = () => {
                         </svg>
                     </S.SSortTransaction>
                     {isOpenSortModWin && <SortModWin />}
-
-                    {/* <S.SortSelect
-                        value={sortOrder}
-                        onChange={(e) => setSortOrder(e.target.value)}
-                    >
-                        <option value="newest">Сначала новые</option>
-                        <option value="oldest">Сначала старые</option>
-                    </S.SortSelect> */}
+                    </S.ModWinPos>
+                    
                 </S.FilterControls>
             </S.TableHeader>
 
@@ -204,7 +201,7 @@ export const TableList = () => {
                 </S.TableHead>
 
                 <S.TableBody>
-                    {processedData.map((item) => (
+                    {transactions.map((item) => (
                         <S.TableRow key={item._id}>
                             <S.TableCell>{item.description}</S.TableCell>
                             <S.TableCell>

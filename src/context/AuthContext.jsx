@@ -1,12 +1,13 @@
 import { createContext, useState, useEffect } from 'react'
 import axios from 'axios'
+import { checkLs } from '../checkLs'
 
 export const AuthContext = createContext()
 
 const userHost = 'https://wedev-api.sky.pro/api/user'
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState(checkLs())
     const [isLoading, setIsLoading] = useState(true)
 
     // Проверка авторизации при загрузке
