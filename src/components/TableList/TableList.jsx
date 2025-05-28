@@ -5,23 +5,37 @@ import { getCategoryName } from '../../constants/categories.js'
 import { ModalWin } from '../ModalWin/ModalWin.jsx'
 import { SortModWin } from '../SortModWin/SortModWin.jsx'
 
+// const formatDate = (dateString) => {
+//     if (!dateString) return ''
+//     console.log(dateString)
+
+//     if (dateString.match(/^\d{2}\.\d{2}\.\d{4}$/)) {
+//         return dateString
+//     }
+//     const date = new Date(dateString)
+//     if (!isNaN(date.getTime())) {
+//         const day = String(date.getDate()).padStart(2, '0')
+//         const month = String(date.getMonth() + 1).padStart(2, '0')
+//         const year = date.getFullYear()
+//         return `${day}.${month}.${year}`
+//     }
+
+//     return dateString
+// }
 const formatDate = (dateString) => {
     if (!dateString) return ''
-
-    if (dateString.match(/^\d{2}\.\d{2}\.\d{4}$/)) {
-        return dateString
-    }
+    console.log(dateString)
+    // console.log(dateString.toLocaleDateString('ru-RU'))
 
     const date = new Date(dateString)
-    if (!isNaN(date.getTime())) {
-        const day = String(date.getDate()).padStart(2, '0')
-        const month = String(date.getMonth() + 1).padStart(2, '0')
+    // if (!isNaN(date.getTime())) {
+        const day = String(date.getDate())
+        const month = String(date.getMonth() + 1)
         const year = date.getFullYear()
+      
         return `${day}.${month}.${year}`
-    }
-
-    return dateString
-}
+    // }
+} 
 
 export const TableList = () => {
     // Данные таблицы
@@ -138,7 +152,7 @@ export const TableList = () => {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 }
             });
-
+           
             if (!response.ok) {
                 throw new Error(`Ошибка: ${response.status}`);
             }

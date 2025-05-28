@@ -22,9 +22,11 @@ import {
 } from './StyledNewCard'
 import { postTransaction } from '../../api'
 import { AuthContext } from '../../context/AuthContext'
-import { format, parse, isValid, getDate, getYear } from 'date-fns'
+import { format, parse, isValid, getDate, getYear, formatDate } from 'date-fns'
 import { TransactionsContext } from '../../context/TransactionsContext'
-
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { ru } from 'date-fns/locale'
 export const NewCard = () => {
     const { user } = useContext(AuthContext)
     const { addTransaction, setTransactions, isEdit, transaction, setTransaction, activeCategory, setActiveCategory } = useContext(TransactionsContext) // Получаем функцию добавления транзакции
@@ -42,29 +44,8 @@ export const NewCard = () => {
 
 
     const [dateError, setDateError] = useState(false)
+    const [selectedDate, setSelectedDate] = useState(null);
 
-    let dateInputNew = '';
-
-    // Проверяем наличие даты в transaction
-    if (transaction?.date) {
-        try {
-            // Создаем объект Date и форматируем
-            const dateObj = new Date(transaction.date);
-
-            // Проверяем, что дата валидна
-            if (!isNaN(dateObj.getTime())) {
-                dateInputNew = format(dateObj, 'dd.MM.yyyy');
-            } else {
-                dateInputNew = format(new Date(), 'dd.MM.yyyy'); // Fallback на текущую дату
-            }
-        } catch (error) {
-            console.error('Ошибка форматирования даты:', error);
-            dateInputNew = format(new Date(), 'dd.MM.yyyy'); // Fallback на текущую дату
-        }
-    } else {
-        // Если даты нет, используем текущую дату
-        dateInputNew = format(new Date(), 'dd.MM.yyyy');
-    }
 
 
     const handleDateChange = (e) => {
@@ -116,21 +97,9 @@ export const NewCard = () => {
         // setErrors({ ...errors, [name]: false });
         // setError("");
     }
-    const handleChangeNew = (e) => {
-        setFormData((prev) => ({
-            ...prev,
-            [e.target.name]: e.target.value,
-            
-        }));
-        console.log(e.target.value);
-        console.log(e.target.name);
-  
-        // setErrors({ ...errors, [e.target.name]: false });
-        // setError("");
-        setTransaction((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-      
-  
-    }
+
+
+
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -147,13 +116,8 @@ export const NewCard = () => {
             console.log(response)
             setTransactions(response)
 
-            // Добавляем новую транзакцию в контекст
-            addTransaction({
-                ...formData,
-                amount: formData.sum, // Используем sum как amount для совместимости с TableList
-                _id: Date.now().toString(), // Временный ID, пока не получим ответ от сервера
-                date: dateInput, // Используем отформатированную дату для отображения
-            })
+
+
         } catch (err) {
             console.log(err.message)
         } finally {
@@ -195,12 +159,17 @@ export const NewCard = () => {
         }
     };
 
-
+    const formatDateFns = (date) => {
+        return format(date, "dd.MM.yyyy");
+    };
+    
 
 
     useEffect(() => {
         setFormData((prev) => ({ ...prev, category: activeCategory }))
     }, [activeCategory])
+
+
 
     return (
         <CardBox>
@@ -382,19 +351,22 @@ export const NewCard = () => {
                 </CardCategoryItems>
                 <CardDateHeader>Дата</CardDateHeader>
                 {!isEdit && (
-                    <CardFormDate
-                        name="date"
-                        value={dateInput} // было value={formData.date}
-                        onChange={handleDateChange} // onChange={handleChange}
-                        placeholder="Введите дату (дд.мм.гггг)"
-                        maxLength="10"
-                        $hasError={dateError}
+                    <DatePicker
+                        selected={selectedDate}
+                        onChange={date => setSelectedDate(date)}
+                        dateFormat="dd.MM.yyyy"
+                        placeholderText="Выберите дату"
+                        className="custom-date-input"
+                        showYearDropdown
+                        dropdownMode="select"
+                        locale="ru"
+                        isClearable
                     />
                 )}
                 {isEdit && (
                     <CardFormDate
                         name="date"
-                        value={dateInputNew}
+                        value={formatDateFns(transaction.date)}
 
                         onChange={(e) =>
                             setTransaction({

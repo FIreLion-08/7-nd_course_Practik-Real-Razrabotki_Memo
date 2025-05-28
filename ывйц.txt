@@ -1,1 +1,26 @@
-Проверка ветки
+import React, { useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
+function DateInput() {
+  
+
+  return (
+    <div>
+      <h3>Выберите дату</h3>
+      <DatePicker
+        selected={selectedDate}
+        onChange={date => setSelectedDate(date)}
+        dateFormat="dd.MM.yyyy"
+        placeholderText="Выберите дату"
+        className="custom-date-input"
+        showYearDropdown
+        dropdownMode="select"
+        locale="ru"
+        isClearable
+      />
+    </div>
+  );
+}
+
+export default DateInput;

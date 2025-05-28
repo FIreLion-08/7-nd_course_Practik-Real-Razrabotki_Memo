@@ -82,24 +82,7 @@ export const TransactionsProvider = ({ children }) => {
         }
     }
 
-    const deleteTransaction = async (id) => {
-        try {
-            const token = localStorage.getItem('token')
-            const response = await axios.delete(basaHost + `/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            setTransactions(response.data)
-            return { success: true }
-        } catch (err) {
-            return {
-                success: false,
-                error:
-                    err.response?.data?.error || 'Failed to delete transaction',
-            }
-        }
-    }
+   
 
     const fetchPeriodTransactions = async (startDate, endDate) => {
         try {
@@ -139,7 +122,6 @@ export const TransactionsProvider = ({ children }) => {
                 fetchTransactions,
                 addTransaction,
                 updateTransaction,
-                deleteTransaction,
                 fetchPeriodTransactions,
                 setTransactions,
                 filtredCategory,
