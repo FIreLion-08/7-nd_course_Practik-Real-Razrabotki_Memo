@@ -8,6 +8,7 @@ const basaHost = 'https://wedev-api.sky.pro/api/transactions'
 
 export const TransactionsProvider = ({ children }) => {
     const [transactions, setTransactions] = useState([])
+    const [periodTransactions, setPeriodTransactions] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
     const [isUsed, setIsUsed] = useState(true)
@@ -150,6 +151,8 @@ export const TransactionsProvider = ({ children }) => {
                 setSortedCategory,
                 period,
                 setPeriod,
+                periodTransactions,
+                setPeriodTransactions
             }}
         >
             {children}

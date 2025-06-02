@@ -14,7 +14,7 @@ import { format, parse } from 'date-fns'
 import { ru } from 'date-fns/locale'
 
 const ExpenseChart = () => {
-    const { transactions, period } = useContext(TransactionsContext)
+    const { periodTransactions, period } = useContext(TransactionsContext)
 
     // 1. Полный список категорий с русскими названиями и цветами
     const categoriesConfig = {
@@ -54,7 +54,7 @@ const ExpenseChart = () => {
         }))
 
         // Заполняем данные из транзакций
-        transactions.forEach((transaction) => {
+        periodTransactions.forEach((transaction) => {
             const category = categoriesConfig[transaction.category]
             if (category) {
                 const existingCategory = result.find(

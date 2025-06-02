@@ -1,15 +1,10 @@
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
 import Loading from './Loading'
 
 const PrivateRoute = () => {
     const { user, isLoading } = useContext(AuthContext)
-
-    useEffect(()=>{
-        console.log(localStorage.getItem('userInfo'));
-        
-    },[])
 
     if (isLoading) {
         return <Loading />
