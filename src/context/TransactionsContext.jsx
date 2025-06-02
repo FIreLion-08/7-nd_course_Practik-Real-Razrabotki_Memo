@@ -14,12 +14,14 @@ export const TransactionsProvider = ({ children }) => {
     const [isUsed, setIsUsed] = useState(true)
     const [filtredCategory, setFiltredCategory] = useState(null)
     const { user } = useContext(AuthContext)
-    const [sortedCategory, setSortedCategory] = useState(null)
+     const [sortedCategory, setSortedCategory] = useState(null)
     const [period, setPeriod] = useState({
         start: '',
         end: '',
     })
-
+    const [isEdit, setIsEdit] = useState(false)
+    const [transaction, setTransaction] = useState(null)
+     const [activeCategory, setActiveCategory] = useState(null)
     const fetchTransactions = async (params = {}) => {
         if (!user) return
 
@@ -85,24 +87,7 @@ export const TransactionsProvider = ({ children }) => {
         }
     }
 
-    const deleteTransaction = async (id) => {
-        try {
-            const token = localStorage.getItem('token')
-            const response = await axios.delete(basaHost + `/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            setTransactions(response.data)
-            return { success: true }
-        } catch (err) {
-            return {
-                success: false,
-                error:
-                    err.response?.data?.error || 'Failed to delete transaction',
-            }
-        }
-    }
+   
 
     const fetchPeriodTransactions = async (startDate, endDate) => {
         try {
@@ -142,17 +127,18 @@ export const TransactionsProvider = ({ children }) => {
                 fetchTransactions,
                 addTransaction,
                 updateTransaction,
-                deleteTransaction,
                 fetchPeriodTransactions,
                 setTransactions,
                 filtredCategory,
                 setFiltredCategory,
                 sortedCategory,
                 setSortedCategory,
-                period,
-                setPeriod,
-                periodTransactions,
-                setPeriodTransactions
+                isEdit,
+                setIsEdit,
+                transaction,
+                setTransaction,
+                activeCategory, 
+                setActiveCategory,
             }}
         >
             {children}

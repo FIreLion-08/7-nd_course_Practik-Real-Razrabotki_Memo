@@ -7,27 +7,41 @@ import { SortModWin } from '../SortModWin/SortModWin.jsx'
 import { filtered, filteredAndSort, sorted } from '../../api.js'
 import { AuthContext } from '../../context/AuthContext.jsx'
 
+// const formatDate = (dateString) => {
+//     if (!dateString) return ''
+//     console.log(dateString)
+
+//     if (dateString.match(/^\d{2}\.\d{2}\.\d{4}$/)) {
+//         return dateString
+//     }
+//     const date = new Date(dateString)
+//     if (!isNaN(date.getTime())) {
+//         const day = String(date.getDate()).padStart(2, '0')
+//         const month = String(date.getMonth() + 1).padStart(2, '0')
+//         const year = date.getFullYear()
+//         return `${day}.${month}.${year}`
+//     }
+
+//     return dateString
+// }
 const formatDate = (dateString) => {
     if (!dateString) return ''
-
-    if (dateString.match(/^\d{2}\.\d{2}\.\d{4}$/)) {
-        return dateString
-    }
+    console.log(dateString)
+    // console.log(dateString.toLocaleDateString('ru-RU'))
 
     const date = new Date(dateString)
-    if (!isNaN(date.getTime())) {
-        const day = String(date.getDate()).padStart(2, '0')
-        const month = String(date.getMonth() + 1).padStart(2, '0')
+    // if (!isNaN(date.getTime())) {
+        const day = String(date.getDate())
+        const month = String(date.getMonth() + 1)
         const year = date.getFullYear()
+      
         return `${day}.${month}.${year}`
-    }
-
-    return dateString
-}
+    // }
+} 
 
 export const TableList = () => {
     // Данные таблицы
-    const { transactions, filtredCategory, sortedCategory, setTransactions, fetchTransactions } =
+    const { transactions, filtredCategory, sortedCategory } =
         useContext(TransactionsContext)
     const { user } = useContext(AuthContext)
     const Token = user.user.token
@@ -86,53 +100,6 @@ export const TableList = () => {
         }
     }, [sortedCategory])
 
-    useEffect(() => {
-        const fetchData = async () => {
-            if (filtredCategory && sortedCategory) {
-                
-                try {
-                    const response = await filteredAndSort(
-                        filtredCategory,
-                        sortedCategory,
-                        Token
-                    )
-                    setTransactions(response)
-                    
-                } catch (err) {
-                    console.error('Ошибка:', err.message)
-                    
-                }
-            } else if (filtredCategory) {
-                try {
-                    const response = await filtered(
-                        filtredCategory,
-                        Token
-                    )
-                    setTransactions(response)
-                    
-                } catch (err) {
-                    console.error('Ошибка:', err.message)
-                    
-                }
-            } else if (sortedCategory){
-                try {
-                    const response = await sorted(
-                        sortedCategory,
-                        Token
-                    )
-                    setTransactions(response)
-                    
-                } catch (err) {
-                    console.error('Ошибка:', err.message)
-                    
-                }
-            } else {
-                fetchTransactions()
-            }
-        }
-        fetchData()
-    }, [filtredCategory, sortedCategory])
-
     return (
         <S.TableBox>
             <S.TableHeader>
@@ -190,18 +157,19 @@ export const TableList = () => {
                 </S.FilterControls>
             </S.TableHeader>
 
-            <S.TableContainer>
-                <S.TableHead>
-                    <S.TableRow>
-                        <S.TableHeaderCell>Описание</S.TableHeaderCell>
-                        <S.TableHeaderCell>Категория</S.TableHeaderCell>
-                        <S.TableHeaderCell>Дата</S.TableHeaderCell>
-                        <S.TableHeaderCell>Сумма</S.TableHeaderCell>
-                    </S.TableRow>
-                </S.TableHead>
+        <S.TableContainer>
+            <S.TableHead>
+                <S.TableRow>
+                    <S.TableHeaderCell>Описание</S.TableHeaderCell>
+                    <S.TableHeaderCell>Категория</S.TableHeaderCell>
+                    <S.TableHeaderCell>Дата</S.TableHeaderCell>
+                    <S.TableHeaderCell>Сумма</S.TableHeaderCell>
+                    <S.TableHeaderCell>Кнопки</S.TableHeaderCell>
+                </S.TableRow>
+            </S.TableHead>
 
                 <S.TableBody>
-                    {transactions.map((item) => (
+                    {processedData.map((item) => (
                         <S.TableRow key={item._id}>
                             <S.TableCell>{item.description}</S.TableCell>
                             <S.TableCell>
