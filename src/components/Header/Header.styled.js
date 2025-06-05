@@ -3,12 +3,14 @@ import styled from 'styled-components'
 
 export const Header = styled.nav`
 
-    width: 100vw;
+    padding-left: calc(50% - 480px);
+  padding-right: calc(50% - 600px);
     background-color:rgb(255, 255, 255);
     color: #030303;
     display: flex;
     justify-content: space-between;
-    padding: 20px 120px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 `
 
 export const Logo = styled.h1`

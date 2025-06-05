@@ -1,18 +1,19 @@
 import styled from 'styled-components'
 
 export const TableBox = styled.div`
-    width: 790px;
+  width: 790px;
+  height: 618px;
     border-radius: 30px;
     box-shadow: 0px 20px 67px -12px rgba(0, 0, 0, 0.13);
     background: rgb(255, 255, 255);
-    padding: 20px;
+    
 `
 
 export const TableHeader = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin: 32px;
 `
 
 export const TitleHeader = styled.h2`
@@ -20,8 +21,10 @@ export const TitleHeader = styled.h2`
     font-family: Montserrat;
     font-size: 24px;
     font-weight: 700;
-    line-height: 29px;
-    margin: 0;
+    line-height: 100%;
+letter-spacing: 0px;
+/* padding-right: 130px; */
+    
 `
 
 export const FilterControls = styled.div`
@@ -47,35 +50,101 @@ export const SortSelect = styled.select`
     cursor: pointer;
     font-family: Montserrat;
 `
+export const TableContainerScroll = styled.div`
+    max-height: 520px;
+    overflow-y: scroll;
+   
+    width: calc(100% + 4px); /* Компенсируем ширину скроллбара */
+
+    /* Полностью кастомный скроллбар без стрелок */
+    &::-webkit-scrollbar {
+        width: 6px;
+        height: 100px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+        border-radius: 30px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #d9d9d9;
+        border-radius: 30px;
+    }
+
+    /* Убираем кнопки стрелок */
+    &::-webkit-scrollbar-button {
+        display: none;
+        width: 0;
+        height: 0;
+    }
+
+    /* Для Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: #d9d9d9 transparent;
+`
 
 export const TableContainer = styled.table`
-    width: 100%;
     border-collapse: collapse;
+  border-spacing: 0;
 `
 
 export const TableHead = styled.thead`
-    background-color: #f5f5f5;
+width: 790px;
+position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #ffffff;
+
 `
 
 export const TableBody = styled.tbody``
 
 export const TableRow = styled.tr`
-    &:nth-child(even) {
-        background-color: #f9f9f9;
-    }
 `
 
 export const TableHeaderCell = styled.th`
-    padding: 12px 15px;
+    
     text-align: left;
     font-family: Montserrat;
-    font-weight: 600;
+    font-size: 12px;
+    font-weight: 400;
+    color: #999999;
+    position: relative;
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        width: 200px;
+        height: 0.5px;
+        background: #999999; /* Дополнительная тонкая линия */
+    }
+    &:first-child{
+padding-left: 32px;
+padding-right: 108px;
+    }
+    &:nth-child(2) {
+  padding-right: 108px;
+}
+&:nth-child(3) {
+  padding-right: 108px;
+}
+&:nth-child(4) {
+  padding-right: 121px;
+}
 `
 
 export const TableCell = styled.td`
-    padding: 12px 15px;
-    border-bottom: 1px solid #e0e0e0;
+    padding-top: 12px;
+
     font-family: Montserrat;
+    font-size: 12px;
+    font-weight: 400;
+    &:first-child{
+padding-left: 32px;
+
+    }
 `
 
 export const SCategory = styled.span`
@@ -88,21 +157,52 @@ export const SCategory = styled.span`
     color: rgba(31, 164, 108, 1);
 `
 export const SFilterCategory = styled.p`
-cursor: pointer;
-font-weight: 400;
-font-size: 12px;
-line-height: 150%;
-letter-spacing: 0px;
-text-align: center;
-vertical-align: middle;
+    cursor: pointer;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+    letter-spacing: 0px;
+    text-align: center;
+    vertical-align: middle;
 `
 export const SSortTransaction = styled.p`
-cursor: pointer;
-font-weight: 400;
-font-size: 12px;
-line-height: 150%;
-letter-spacing: 0px;
-text-align: center;
-vertical-align: middle;
+    cursor: pointer;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+    letter-spacing: 0px;
+    text-align: center;
+    vertical-align: middle;
+`
 
+export const ModWinPos = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+`
+export const SButtonDelete = styled.button`
+    cursor: pointer;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+    letter-spacing: 0px;
+    text-align: center;
+    vertical-align: middle;
+    background-color: rgb(255, 255, 255);
+    border: none;
+    padding: 0;
+    margin-left: 6px;
+`
+export const SButtonEdit = styled.button`
+    cursor: pointer;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+    letter-spacing: 0px;
+    text-align: center;
+    vertical-align: middle;
+    background-color: rgb(255, 255, 255);
+    border: none;
+    padding: 0;
+    margin-right: 6px;
 `

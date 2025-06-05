@@ -3,7 +3,8 @@ import styled from 'styled-components'
 export const StyleAnalysis = styled.div`
     max-width: 100%;
     margin: 0 auto;
-    background-color: #eaeef6;
+    
+    
 `
 export const StyleAnalysisExpress = styled.div`
     padding-left: 120px;
@@ -76,4 +77,9 @@ export const CategoryTitle = styled.h4`
 export const CategoryAmount = styled.div`
     font-size: 18px;
     font-weight: 600;
+`
+export const AnalysisBlock = styled.div`
+display: flex;
+flex-direction: row;
+gap: 32px;
 `
