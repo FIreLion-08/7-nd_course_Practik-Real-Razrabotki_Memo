@@ -2,6 +2,7 @@ import * as S from './AuthPage.styled.js'
 // import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AuthForm from '../../components/AuthForm/AuthForm.jsx'
+import { Header } from '../../components/Header/Header.jsx'
 
 const AuthPage = ({ isLogin }) => {
     const navigate = useNavigate()
@@ -11,6 +12,8 @@ const AuthPage = ({ isLogin }) => {
     }
 
     return (
+        <>
+        <Header/>
         <S.Container>
             <S.Card>
                 <S.Title>{isLogin ? 'Вход' : 'Регистрация'}</S.Title>
@@ -32,6 +35,7 @@ const AuthPage = ({ isLogin }) => {
                 </S.SwitchText>
             </S.Card>
         </S.Container>
+        </>
     )
 }
 

@@ -49,6 +49,8 @@ const AuthForm = ({ isLogin, onSuccess }) => {
                 setError(result.error || 'Произошла неизвестная ошибка')
             }
         } catch (err) {
+            console.log(err);
+
             setError('Неверный логин или пароль')
         } finally {
             setIsSubmitting(false)
@@ -56,6 +58,8 @@ const AuthForm = ({ isLogin, onSuccess }) => {
     }
 
     return (
+        <>
+        
         <S.Form onSubmit={handleSubmit}>
             {!isLogin && (
                 <Input
@@ -88,6 +92,7 @@ const AuthForm = ({ isLogin, onSuccess }) => {
                 {isLogin ? 'Войти' : 'Зарегистрироваться'}
             </Button>
         </S.Form>
+        </>
     )
 }
 

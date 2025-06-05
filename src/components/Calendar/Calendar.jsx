@@ -65,7 +65,7 @@ const MyDateRangePicker = () => {
         months={2} // Показывать 2 месяца
         ranges={state}
         direction="vertical"
-        // scroll={{ enabled: true }}
+        scroll={{ enabled: true }}
         renderMonthHeader={renderMonthHeader}
       />
     </CalendarBox>

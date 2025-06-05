@@ -31,8 +31,8 @@ const formatDate = (dateString) => {
 
     const date = new Date(dateString)
     // if (!isNaN(date.getTime())) {
-        const day = String(date.getDate())
-        const month = String(date.getMonth() + 1)
+        const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
         const year = date.getFullYear()
       
         return `${day}.${month}.${year}`
@@ -41,7 +41,7 @@ const formatDate = (dateString) => {
 
 export const TableList = () => {
     // Данные таблицы
-    const { transactions, filtredCategory, sortedCategory } =
+    const { transactions, filtredCategory, sortedCategory, setTransaction, setIsEdit, setTransactions, fetchTransactions, setActiveCategory } =
         useContext(TransactionsContext)
     const { user } = useContext(AuthContext)
     const Token = user.user.token
@@ -100,6 +100,82 @@ export const TableList = () => {
         }
     }, [sortedCategory])
 
+    useEffect(() => {
+        const fetchData = async () => {
+            if (filtredCategory && sortedCategory) {
+
+                try {
+                    const response = await filteredAndSort(
+                        filtredCategory,
+                        sortedCategory,
+                        Token
+                    )
+                    setTransactions(response)
+
+                } catch (err) {
+                    console.error('Ошибка:', err.message)
+
+                }
+            } else if (filtredCategory) {
+                try {
+                    const response = await filtered(
+                        filtredCategory,
+                        Token
+                    )
+                    setTransactions(response)
+
+                } catch (err) {
+                    console.error('Ошибка:', err.message)
+
+                }
+            } else if (sortedCategory){
+                try {
+                    const response = await sorted(
+                        sortedCategory,
+                        Token
+                    )
+                    setTransactions(response)
+
+                } catch (err) {
+                    console.error('Ошибка:', err.message)
+
+                }
+            } else {
+                fetchTransactions()
+            }
+        }
+        fetchData()
+    }, [filtredCategory, sortedCategory])
+
+    const handleDeleteTransaction = async (id) => {
+        try {
+            const response = await fetch(`https://wedev-api.sky.pro/api/transactions/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`Ошибка: ${response.status}`);
+            }
+           
+            setTransactions(transactions.filter(item => item._id !== id));
+            console.log('Транзакция успешно удалена');
+
+        } catch (error) {
+            console.error('Ошибка при удалении транзакции:', error);
+        }
+    };
+    const editTrans = (id) => {
+        const transaction = transactions.find((item) => item._id === id);
+        console.log(transaction)
+        setTransaction(transaction);
+        setIsEdit(true);
+        setActiveCategory(transaction.category)
+        return transaction;
+    };
+
     return (
         <S.TableBox>
             <S.TableHeader>
@@ -156,7 +232,7 @@ export const TableList = () => {
                     
                 </S.FilterControls>
             </S.TableHeader>
-
+<S.TableContainerScroll>
         <S.TableContainer>
             <S.TableHead>
                 <S.TableRow>
@@ -164,12 +240,12 @@ export const TableList = () => {
                     <S.TableHeaderCell>Категория</S.TableHeaderCell>
                     <S.TableHeaderCell>Дата</S.TableHeaderCell>
                     <S.TableHeaderCell>Сумма</S.TableHeaderCell>
-                    <S.TableHeaderCell>Кнопки</S.TableHeaderCell>
+<S.TableHeaderCell></S.TableHeaderCell>
                 </S.TableRow>
             </S.TableHead>
 
                 <S.TableBody>
-                    {processedData.map((item) => (
+                    {transactions.map((item) => (
                         <S.TableRow key={item._id}>
                             <S.TableCell>{item.description}</S.TableCell>
                             <S.TableCell>
@@ -177,10 +253,19 @@ export const TableList = () => {
                             </S.TableCell>
                             <S.TableCell>{formatDate(item.date)}</S.TableCell>
                             <S.TableCell>{item.sum} ₽</S.TableCell>
+                            <S.TableCell>
+                            <S.SButtonEdit onClick={() => editTrans(item._id)}>
+                                <img src="public/edit.svg" alt="edit-icon" />
+                            </S.SButtonEdit>
+                            <S.SButtonDelete onClick={() => handleDeleteTransaction(item._id)}>
+                                <img src="public/bag.svg" alt="delete-icon" />
+                            </S.SButtonDelete>
+                        </S.TableCell>
                         </S.TableRow>
                     ))}
                 </S.TableBody>
             </S.TableContainer>
+            </S.TableContainerScroll>
         </S.TableBox>
     )
 }

@@ -9,7 +9,7 @@ import {
     ResponsiveContainer,
 } from 'recharts'
 import { TransactionsContext } from '../../context/TransactionsContext'
-import { HeaderPeriod, HeaderSum, PeriodDate } from './Chart'
+import { ChartBox, HeaderPeriod, HeaderSum, PeriodDate } from './Chart'
 import { format, parse } from 'date-fns'
 import { ru } from 'date-fns/locale'
 
@@ -79,8 +79,8 @@ const ExpenseChart = () => {
         return format(date, 'd MMMM yyyy', { locale: ru })
     }
 
-    let periodStart;
-    let periodEnd;
+    let periodStart
+    let periodEnd
 
     if (period.start === '' || period.end === '') {
         return
@@ -90,30 +90,24 @@ const ExpenseChart = () => {
     }
 
     return (
-        <div
-            style={{
-                width: '798px',
-                maxHeight: '540px',
-                background: 'white',
-                padding: '20px',
-                borderRadius: '30px',
-            }}
-        >
+        <ChartBox>
             <HeaderSum>{totalSum}</HeaderSum>
-            {period.start === period.end && (<HeaderPeriod>
-                Расходы за <PeriodDate>{periodStart}</PeriodDate>
-            </HeaderPeriod>)}
+            {period.start === period.end && (
+                <HeaderPeriod>
+                    Расходы за <PeriodDate>{periodStart}</PeriodDate>
+                </HeaderPeriod>
+            )}
             {period.start != period.end && (
                 <HeaderPeriod>
-                Расходы за <PeriodDate>{periodStart}</PeriodDate> -
-                <PeriodDate>{periodEnd}</PeriodDate>
-            </HeaderPeriod>
+                    Расходы за <PeriodDate>{periodStart}</PeriodDate> -
+                    <PeriodDate>{periodEnd}</PeriodDate>
+                </HeaderPeriod>
             )}
             <ResponsiveContainer width="100%" height="95%">
                 <BarChart
                     data={data}
                     layout="horizontal"
-                    margin={{ top: 20, right: 30, bottom: 44 }}
+                    margin={{ top: 30, right: 30, bottom: 44 }}
                 >
                     <XAxis
                         dataKey="name"
@@ -121,11 +115,6 @@ const ExpenseChart = () => {
                         tickLine={false}
                         tick={{ fontSize: 12 }}
                     />
-                    {/* <YAxis 
-                        tickFormatter={formatValue}
-                        axisLine={{ stroke: '#ccc' }}
-                        tickLine={false}
-                    /> */}
                     <Tooltip
                         formatter={(value) => [formatValue(value)]}
                         contentStyle={{
@@ -156,7 +145,7 @@ const ExpenseChart = () => {
                     </Bar>
                 </BarChart>
             </ResponsiveContainer>
-        </div>
+        </ChartBox>
     )
 }
 export default ExpenseChart

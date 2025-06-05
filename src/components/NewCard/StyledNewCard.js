@@ -1,8 +1,10 @@
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import styled from 'styled-components'
 
 export const CardBox = styled.div`
-    height: 618px;
-    width: 379px;
+    max-height: 620px;
+    width: 380px;
     background-color: #ffffff;
     border-radius: 30px;
 `
@@ -32,6 +34,7 @@ export const CardFormDiscription = styled.input`
     border-radius: 6px;
     margin-left: 32px;
     margin-bottom: 24px;
+     margin-right: 34px;
     padding-left: 12px;
     &::placeholder {
         font-size: 12px;
@@ -177,6 +180,7 @@ export const CardFormDate = styled.input`
     border-radius: 6px;
     margin-left: 32px;
     margin-bottom: 24px;
+     margin-right: 34px;
     padding-left: 12px;
     border-color: ${(props) => (props.$hasError ? 'red' : 'initial')};
     &::placeholder {
@@ -200,6 +204,7 @@ export const CardFormSum = styled.input`
     border-radius: 6px;
     margin-left: 32px;
     margin-bottom: 24px;
+     margin-right: 34px;
     padding-left: 12px;
     -moz-appearance: textfield;
     &::-webkit-outer-spin-button,
@@ -216,12 +221,36 @@ export const CardFormSum = styled.input`
 `
 export const CardFormButton = styled.button`
     margin-left: 32px;
-    margin-right: 34px;
+    
     margin-bottom: 32px;
     background-color: #1fa46c;
     border: none;
     border-radius: 6px;
-    padding: 12px 79px 12px 79px;
+    padding: 12px 82px 12px 79px;
     color: #ffffff;
     cursor: pointer;
 `
+export const StyledDatePicker = styled(DatePicker)`
+  padding: 12px 12px;
+  border: 0.5px solid #ccc;
+  border-radius: 6px;
+  font-size: 12px;
+  width: 313px;
+  background-color: white;
+  margin-left: 32px;
+  margin-bottom: 24px;
+  background-color: ${(props) => (props.$isInvalid ? "rgba(255, 235, 235, 1)" : "rgba(241, 235, 253, 1)")};
+  ${({ $isInvalid }) => {
+    switch ($isInvalid) {
+      case "true":
+        return `background-color: rgba(241, 235, 253, 1);
+                 border: 0.5px solid #7334EA;`;
+      case "false":
+        return `background-color: rgba(255, 235, 235, 1);
+                 border: 0.5px solid #F25050;`;
+      default:
+        return `background-color: #FFFFFF;
+                 border: 0.5px solid #999999;`;
+    }
+  }}
+`;

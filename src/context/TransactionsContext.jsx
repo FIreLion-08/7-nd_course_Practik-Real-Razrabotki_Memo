@@ -139,6 +139,10 @@ export const TransactionsProvider = ({ children }) => {
                 setTransaction,
                 activeCategory, 
                 setActiveCategory,
+                periodTransactions,
+                setPeriodTransactions,
+                period, 
+                setPeriod
             }}
         >
             {children}
