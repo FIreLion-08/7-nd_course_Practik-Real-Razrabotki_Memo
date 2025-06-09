@@ -27,10 +27,10 @@ export const CardCategoryItemFood = styled.div`
     ${(props) =>
         props.$isActive === 'food' &&
         `
-      background-color: #DBFFE9;
-      color:  #1FA46C;
+      background-color: #F1EBFD;
+      color:  #7334EA;
       svg path {
-  fill: #1FA46C;
+  fill: #7334EA;
 }
     `}
 `
@@ -44,10 +44,10 @@ export const CardCategoryItemTransport = styled.div`
     ${(props) =>
         props.$isActive === 'transport' &&
         `
-      background-color: #DBFFE9;
-      color:  #1FA46C;
+      background-color: #F1EBFD;
+      color:  #7334EA;
       svg path {
-  fill: #1FA46C;
+  fill: #7334EA;
 }
     `}
 `
@@ -61,10 +61,10 @@ export const CardCategoryItemJoy = styled.div`
     ${(props) =>
         props.$isActive === 'joy' &&
         `
-      background-color: #DBFFE9;
-      color:  #1FA46C;
+      background-color: #F1EBFD;
+      color:  #7334EA;
       svg path {
-  fill: #1FA46C;
+  fill: #7334EA;
 }
     `}
 `
@@ -79,10 +79,10 @@ export const CardCategoryItemHousing = styled.div`
     ${(props) =>
         props.$isActive === 'housing' &&
         `
-      background-color: #DBFFE9;
-      color:  #1FA46C;
+      background-color: #F1EBFD;
+      color:  #7334EA;
       svg path {
-  fill: #1FA46C;
+  fill: #7334EA;
 }
     `}
 `
@@ -97,10 +97,10 @@ export const CardCategoryItemEducation = styled.div`
     ${(props) =>
         props.$isActive === 'education' &&
         `
-      background-color: #DBFFE9;
-      color:  #1FA46C;
+      background-color: #F1EBFD;
+      color:  #7334EA;
       svg path {
-  fill: #1FA46C;
+  fill: #7334EA;
 }
     `}
 `
@@ -115,10 +115,10 @@ export const CardCategoryItemOthers = styled.div`
     ${(props) =>
         props.$isActive === 'others' &&
         `
-      background-color: #DBFFE9;
-      color:  #1FA46C;
+      background-color: #F1EBFD;
+      color:  #7334EA;
       svg path {
-  fill: #1FA46C;
+  fill: #7334EA;
 }
     `}
 `

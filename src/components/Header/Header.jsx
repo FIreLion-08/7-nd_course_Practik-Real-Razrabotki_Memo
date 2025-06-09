@@ -5,20 +5,14 @@ import { Link } from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContext.jsx'
 
 export const Header = () => {
-    const { isUsed, setIsUsed } = useContext(TransactionsContext);
+    
     const { user, logout } = useContext(AuthContext);
 
-    const handleClick = () => {
-        setIsUsed(true);
-    };
-
-    const handleClickOnAnalis = () => {
-        setIsUsed(false);
-    };
+    
 
     return (
         <S.Header>
-            <Link to={'/'} onClick={handleClick}>
+            <Link to={'/'}>
                 <img src="../../public/Vector.svg" />
             </Link>
             {user && (
@@ -27,8 +21,7 @@ export const Header = () => {
                         <S.MenuItem>
                             <S.HeadExpenses
                                 to={'/'}
-                                onClick={handleClick}
-                                $isUsed={isUsed}
+                                className={({isActive}) => isActive ? 'active':''}
                             >
                                 Мои расходы
                             </S.HeadExpenses>
@@ -36,8 +29,7 @@ export const Header = () => {
                         <S.MenuItem>
                             <S.HeadAnalysis
                                 to={'/analysis'}
-                                onClick={handleClickOnAnalis}
-                                $isUsed={isUsed}
+                                className={({isActive}) => isActive ? 'active':''}
                             >
                                 Анализ расходов
                             </S.HeadAnalysis>

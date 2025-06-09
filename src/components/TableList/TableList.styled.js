@@ -53,7 +53,7 @@ export const SortSelect = styled.select`
 export const TableContainerScroll = styled.div`
     max-height: 520px;
     overflow-y: scroll;
-   
+   overflow-x: hidden;
     width: calc(100% + 4px); /* Компенсируем ширину скроллбара */
 
     /* Полностью кастомный скроллбар без стрелок */
@@ -116,7 +116,7 @@ export const TableHeaderCell = styled.th`
         position: absolute;
         bottom: -1px;
         left: 0;
-        width: 200px;
+        width: 210px;
         height: 0.5px;
         background: #999999; /* Дополнительная тонкая линия */
     }
@@ -154,7 +154,7 @@ export const SCategory = styled.span`
     letter-spacing: 0px;
     text-align: center;
     text-decoration: underline;
-    color: rgba(31, 164, 108, 1);
+    color: #7334EA;
 `
 export const SFilterCategory = styled.p`
     cursor: pointer;

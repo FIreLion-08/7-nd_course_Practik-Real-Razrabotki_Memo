@@ -7,7 +7,8 @@ export const StyleAnalysis = styled.div`
     
 `
 export const StyleAnalysisExpress = styled.div`
-    padding-left: 120px;
+      padding-left: max(15px, calc(50% - 600px));
+padding-right: max(15px, calc(50% - 600px));
 `
 
 export const Title = styled.h2`

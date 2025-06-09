@@ -27,10 +27,10 @@ export const SortCategoriesDate = styled.div`
     ${(props) =>
         props.$isActive === 'date' &&
         `
-      background-color: #DBFFE9;
-      color:  #1FA46C;
+      background-color: #F1EBFD;
+      color:  #7334EA;
       svg path {
-  fill: #1FA46C;
+  fill: #7334EA;
 }
     `}
 `
@@ -45,10 +45,10 @@ export const SortCategoriesSum = styled.div`
     ${(props) =>
         props.$isActive === 'sum' &&
         `
-      background-color: #DBFFE9;
-      color:  #1FA46C;
+      background-color: #F1EBFD;
+      color:  #7334EA;
       svg path {
-  fill: #1FA46C;
+  fill: #7334EA;
 }
     `}
 `

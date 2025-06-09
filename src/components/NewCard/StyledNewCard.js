@@ -68,10 +68,10 @@ export const CardCategoryItemFood = styled.div`
     ${(props) =>
         props.$isActive === 'food' &&
         `
-      background-color: #DBFFE9;
-      color:  #1FA46C;
+      background-color: #F1EBFD;
+      color:  #7334EA;
       svg path {
-  fill: #1FA46C;
+  fill: #7334EA;
 }
     `}
 `
@@ -85,10 +85,10 @@ export const CardCategoryItemTransport = styled.div`
     ${(props) =>
         props.$isActive === 'transport' &&
         `
-      background-color: #DBFFE9;
-      color:  #1FA46C;
+      background-color: #F1EBFD;
+      color:  #7334EA;
       svg path {
-  fill: #1FA46C;
+  fill: #7334EA;
 }
     `}
 `
@@ -101,10 +101,10 @@ export const CardCategoryItemJoy = styled.div`
     ${(props) =>
         props.$isActive === 'joy' &&
         `
-      background-color: #DBFFE9;
-      color:  #1FA46C;
+      background-color: #F1EBFD;
+      color:  #7334EA;
       svg path {
-  fill: #1FA46C;
+  fill: #7334EA;
 }
     `}
 `
@@ -118,10 +118,10 @@ export const CardCategoryItemHousing = styled.div`
     ${(props) =>
         props.$isActive === 'housing' &&
         `
-      background-color: #DBFFE9;
-      color:  #1FA46C;
+      background-color: #F1EBFD;
+      color:  #7334EA;
       svg path {
-  fill: #1FA46C;
+  fill: #7334EA;
 }
     `}
 `
@@ -135,10 +135,10 @@ export const CardCategoryItemEducation = styled.div`
     ${(props) =>
         props.$isActive === 'education' &&
         `
-      background-color: #DBFFE9;
-      color:  #1FA46C;
+      background-color: #F1EBFD;
+      color:  #7334EA;
       svg path {
-  fill: #1FA46C;
+  fill: #7334EA;
 }
     `}
 `
@@ -152,10 +152,10 @@ export const CardCategoryItemOthers = styled.div`
     ${(props) =>
         props.$isActive === 'others' &&
         `
-      background-color: #DBFFE9;
-      color:  #1FA46C;
+      background-color: #F1EBFD;
+      color:  #7334EA;
       svg path {
-  fill: #1FA46C;
+  fill: #7334EA;
 }
     `}
 `
@@ -223,7 +223,7 @@ export const CardFormButton = styled.button`
     margin-left: 32px;
     
     margin-bottom: 32px;
-    background-color: #1fa46c;
+    background-color: #7334EA;
     border: none;
     border-radius: 6px;
     padding: 12px 82px 12px 79px;
