@@ -2,13 +2,14 @@ import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 
 export const Header = styled.nav`
-
-    width: 100vw;
-    background-color:rgb(255, 255, 255);
+    padding-left: calc(50% - 600px);
+    padding-right: calc(50% - 600px);
+    background-color: rgb(255, 255, 255);
     color: #030303;
     display: flex;
     justify-content: space-between;
-    padding: 20px 120px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 `
 
 export const Logo = styled.h1`
@@ -42,38 +43,22 @@ export const MenuItem = styled.li`
     transition: all 0.3s;
     font-weight: 400;
 
-    &:hover {
-        /* text-decoration: underline; */
-        color: green;
+    &:hover,
+    .active {
+        color: #7334EA;
         font-weight: 600;
-        /* border-bottom: 2px solid #000; */
+        border-bottom: 2px solid #7334EA;
     }
 
-    /* &.active {
-        color: green;
-        text-decoration: underline;
-        font-weight: bold;
-        
-    } */
 `
 
 export const HeadExpenses = styled(NavLink)`
-    width:105px;
+    width: 105px;
     display: inline-block;
     border-bottom: 2px solid transparent;
     padding-bottom: 2px;
 
-    ${props => props.$isUsed && `
-        color: green;
-        font-weight: 600;
-        border-bottom: 2px solid green;
-    `}
-
-    &:hover {
-        color: green;
-        font-weight: 600;
-        border-bottom: 2px solid green;
-    }
+    
 `
 
 export const HeadAnalysis = styled(NavLink)`
@@ -82,17 +67,6 @@ export const HeadAnalysis = styled(NavLink)`
     border-bottom: 2px solid transparent;
     padding-bottom: 2px;
 
-    ${props => !props.$isUsed && `
-        color: green;
-        font-weight: 600;
-        border-bottom: 2px solid green;
-    `}
-
-    &:hover {
-        color: green;
-        font-weight: 600;
-        border-bottom: 2px solid green;
-    }
 `
 
 export const HeadExit = styled(NavLink)`

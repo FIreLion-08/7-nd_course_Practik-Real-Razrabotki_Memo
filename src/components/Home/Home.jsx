@@ -8,8 +8,10 @@ export const Home = () => {
     console.log('привет')
 
     return (
+        <>
+        <Header />
         <S.StyleHome>
-            <Header />
+            
 
             <S.StyleExpenses>
                 <S.Title>Мои расходы</S.Title>
@@ -21,5 +23,6 @@ export const Home = () => {
 
             <Outlet />
         </S.StyleHome>
+        </>
     )
 }

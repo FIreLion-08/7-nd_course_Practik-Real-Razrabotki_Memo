@@ -19,79 +19,91 @@ import {
     CardHeader,
     CardSumHeader,
     ItemName,
+    StyledDatePicker,
+    ErrorStar,
 } from './StyledNewCard'
 import { postTransaction } from '../../api'
 import { AuthContext } from '../../context/AuthContext'
-import { format, parse, isValid } from 'date-fns'
 import { TransactionsContext } from '../../context/TransactionsContext'
+import 'react-datepicker/dist/react-datepicker.css'
 
 export const NewCard = () => {
     const { user } = useContext(AuthContext)
-    const { addTransaction, setTransactions } = useContext(TransactionsContext) // Получаем функцию добавления транзакции
-    const [activeCategory, setActiveCategory] = useState(null)
+    const {
+        setTransactions,
+        
+        activeCategory,
+        setActiveCategory,
+    } = useContext(TransactionsContext) // Получаем функцию добавления транзакции
+
     
+    const [validationSum, setValidationSum] = useState('empty')
+    const [validationDescription, setValidationDescription] = useState('empty')
+    const [dateError, setDateError] = useState(false)
+    const [selectedDate, setSelectedDate] = useState(null)
+    const [customFormatDate, setCustomFormatDate] = useState(null);
+    const [useCategory, setUseCategory] = useState(false);
+  const [isInvalid, setIsInvalid] = useState(null);
+  const [activButton, setActivButton] = useState(false)
+
+    const [dateInput, setDateInput] = useState('')
     const Token = user.user.token
-    
+
 
     const [formData, setFormData] = useState({
         description: '',
         sum: '',
         category: activeCategory,
-        date: '',
+        date: customFormatDate,
     })
 
-    const [dateInput, setDateInput] = useState('')
-    const [dateError, setDateError] = useState(false)
+    
+const formatDateToCustom = (date) => {
+    if (!date) return null;
+    return `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}`;
+  };
 
-    const handleDateChange = (e) => {
-        let value = e.target.value
-        value = value.replace(/\D/g, '')
 
-        if (value.length > 8) {
-            value = value.slice(0, 8)
-        }
+const validateSum = (value) => {
+  if (!value) return 'empty'; // Поле пустое
+  if (value.length < 2) return 'invalid'; // Слишком короткое
+  return 'valid'; // Валидное значение
+};
 
-        if (value.length > 4) {
-            value = `${value.slice(0, 2)}.${value.slice(2, 4)}.${value.slice(
-                4
-            )}`
-        } else if (value.length > 2) {
-            value = `${value.slice(0, 2)}.${value.slice(2)}`
-        }
+const validateDescription = (value) => {
+  if (!value) return 'empty'; // Поле пустое
+  if (value.length < 4) return 'invalid'; // Слишком короткое
+  return 'valid'; // Валидное значение
+};
+    
 
-        setDateInput(value)
-
-        if (value.length === 10) {
-            const parsedDate = parse(value, 'dd.MM.yyyy', new Date())
-
-            if (isValid(parsedDate)) {
-                const serverFormatDate = format(parsedDate, 'yyyy-MM-dd')
-                setFormData((prev) => ({ ...prev, date: serverFormatDate }))
-                setDateError(false)
-            } else {
-                setDateError(true)
-                setFormData((prev) => ({ ...prev, date: '' }))
-            }
-        } else {
-            setFormData((prev) => ({ ...prev, date: '' }))
-            setDateError(value.length > 0)
-        }
+ const handleChange = (e) => {
+        const { name, value } = e.target
+       
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+        }))
+         
+         setValidationDescription(validateDescription(value))
+  
     }
 
-    const handleChange = (e) => {
+    const handleSumChange = (e) => {
         const { name, value } = e.target
+       
         setFormData((prev) => ({
             ...prev,
             [name]:
                 name === 'sum'
                     ? value === ''
-                        ? 0 // если поле пустое, ставим 0 (или можно оставить пустую строку)
+                        ? '' // если поле пустое, ставим 0 (или можно оставить пустую строку)
                         : Number(value) // преобразуем строку в число
                     : value, // остальные поля без изменений
         }))
-
-        // setErrors({ ...errors, [name]: false });
-        // setError("");
+         setValidationSum(validateSum(value))
+         
+  
     }
 
     const handleSubmit = async (e) => {
@@ -99,23 +111,20 @@ export const NewCard = () => {
         // if (!validateForm()) {
         //   return;
         // }
-        if (dateError || !formData.date) {
+        if(!activeCategory) {
+            setUseCategory(true)
+            return
+        }
+       
+        if (dateError) {
             setDateError(true)
             return
         }
 
         try {
             const response = await postTransaction(Token, formData)
-            console.log(response)
+            
             setTransactions(response)
-
-            // Добавляем новую транзакцию в контекст
-            addTransaction({
-                ...formData,
-                amount: formData.sum, // Используем sum как amount для совместимости с TableList
-                _id: Date.now().toString(), // Временный ID, пока не получим ответ от сервера
-                date: dateInput, // Используем отформатированную дату для отображения
-            })
         } catch (err) {
             console.log(err.message)
         } finally {
@@ -126,26 +135,82 @@ export const NewCard = () => {
                 category: '',
                 date: '',
             })
+            setSelectedDate("")
             setDateInput('')
+            setValidationDescription('empty')
+            setValidationSum('empty')
+            setIsInvalid(null)
         }
     }
 
+    const handleDateChange = (date) => {
+    setSelectedDate(date);
+    setCustomFormatDate(formatDateToCustom(date))
+    setDateInput("");
+    setIsInvalid(false);
+  };
+
+     const handleInputChange = (inputValue) => {
+    setDateInput(inputValue);
+    
+    // Проверка валидности только при полном вводе
+    if (inputValue.length === 10) {
+      const isValid = /^\d{2}\.\d{2}\.\d{4}$/.test(inputValue);
+      
+      if (isValid) {
+        const [day, month, year] = inputValue.split('.').map(Number);
+        const date = new Date(year, month - 1, day);
+        
+        if (date.getDate() === day && date.getMonth() === month - 1) {
+          setSelectedDate(date);
+          setIsInvalid('false');
+        } else {
+          setIsInvalid('true');
+        }
+      } else {
+        setIsInvalid('true');
+      }
+    } else if (inputValue.length === 0) {
+      setIsInvalid('null');
+    } else {
+      setIsInvalid('false');
+    }
+  };
+
+  useEffect(()=>{
+if (validationSum === "valid" && validationDescription === "valid" && !isInvalid && !useCategory) {
+    setActivButton(true)
+} else {
+    setActivButton(false)
+}
+  }, [validationSum, validationDescription, isInvalid, useCategory])
+
+    
+
     useEffect(() => {
         setFormData((prev) => ({ ...prev, category: activeCategory }))
-    }, [activeCategory])
+        setFormData((prev) => ({...prev, date: customFormatDate}))
+    }, [activeCategory, customFormatDate])
 
+    
     return (
         <CardBox>
-            <CardHeader>Новый расход</CardHeader>
+            <CardHeader>
+                Новый расход
+            </CardHeader>
             <CardForm onSubmit={handleSubmit}>
-                <CardFormHeader>Описание</CardFormHeader>
-                <CardFormDiscription
-                    name="description"
-                    value={formData.description}
-                    onChange={handleChange}
-                    placeholder="Введите описание"
-                />
-                <CardCategoryHeader>Категория</CardCategoryHeader>
+                <CardFormHeader>Описание  {validationDescription === 'invalid' && (<ErrorStar>*</ErrorStar>)}</CardFormHeader>
+                
+                    <CardFormDiscription $validationDescription = {validationDescription}
+                        name="description"
+                        value={formData.description}
+                        onChange={handleChange}
+                        placeholder="Введите описание"
+                    />
+                
+                
+
+                <CardCategoryHeader>Категория {useCategory && (<ErrorStar>*</ErrorStar>)}</CardCategoryHeader>
                 <CardCategoryItems>
                     <CardCategoryItemFood
                         onClick={() =>
@@ -297,31 +362,38 @@ export const NewCard = () => {
                     </CardCategoryItemOthers>
                 </CardCategoryItems>
                 <CardDateHeader>Дата</CardDateHeader>
-                <CardFormDate
-                    name="date"
-                    value={dateInput} // было value={formData.date}
-                    onChange={handleDateChange} // onChange={handleChange}
-                    placeholder="Введите дату (дд.мм.гггг)"
-                    maxLength="10"
-                    $hasError={dateError}
-                />
-                {dateError && (
-                    <div style={{ color: 'red', fontSize: '12px' }}>
-                        Введите корректную дату в формате дд.мм.гггг
-                    </div>
-                )}
-                <CardSumHeader>Сумма</CardSumHeader>
-                <CardFormSum
-                    type="number"
-                    name="sum"
-                    value={formData.sum}
-                    onChange={handleChange}
-                    placeholder="Введите сумму"
-                />
+                
+                    <StyledDatePicker
+                        selected={selectedDate}
+                        onChange={handleDateChange}
+                        onInputChange={handleInputChange}
+                        dateFormat="dd.MM.yyyy"
+                        placeholderText="Выберите дату"
+                        showYearDropdown
+                        dropdownMode="select"
+                        $isInvalid={isInvalid}
+                    />
+                
+            
+                <CardSumHeader >Сумма {validationSum === 'invalid' && (<ErrorStar>*</ErrorStar>)}</CardSumHeader>
+                
+                    <CardFormSum $inputError = {validationSum}
+                        type="number"
+                        name="sum"
+                        min={0}
+                        value={formData.sum}
+                        onChange={handleSumChange}
+                        placeholder="Введите сумму"
+                    />
+            
+                
             </CardForm>
-            <CardFormButton onClick={handleSubmit}>
-                Добавить новый расход
-            </CardFormButton>
+            
+                <CardFormButton onClick={handleSubmit} disabled={!activButton} $activButton={activButton}>
+                    Добавить новый расход
+                </CardFormButton>
+            
+            
         </CardBox>
     )
 }
