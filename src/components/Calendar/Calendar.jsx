@@ -25,13 +25,7 @@ to: new Date(),
 })
 
 
-  // const renderMonthHeader = ({ month }) => {
-  //   return (
-  //     <CustomMonthHeader>
-  //       {format(month, 'LLLL yyyy', { locale: ru })}
-  //     </CustomMonthHeader>
-  //   );
-  // };
+ 
 
   const formatDate = (date) => {
     const day = date.getDate(); // День (1-31)
@@ -70,7 +64,6 @@ end: formatDate(selected.to)
       mode="range"
       selected={selected}
       onSelect={setSelected}
-      
       locale={ru}
       month={twoYearsAgo}
       numberOfMonths={15}

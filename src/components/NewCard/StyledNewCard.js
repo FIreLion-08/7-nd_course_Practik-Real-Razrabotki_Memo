@@ -41,6 +41,17 @@ export const CardFormDiscription = styled.input`
         font-weight: 400;
         color: #999999;
     }
+    ${({$validationDescription}) => {switch ($validationDescription) {
+      case 'valid':
+        return `background-color: rgba(241, 235, 253, 1);
+                 border: 0.5px solid #7334EA;`;
+      case "invalid":
+        return `background-color: rgba(255, 235, 235, 1);
+                 border: 0.5px solid #F25050;`;
+      default:
+        return `background-color: #FFFFFF;
+                 border: 0.5px solid #999999;`;
+    }}}
 `
 export const CardCategoryHeader = styled.h3`
     font-size: 16px;
@@ -196,6 +207,7 @@ export const CardSumHeader = styled.h3`
     line-height: 100%;
     padding-bottom: 16px;
     padding-left: 32px;
+    
 `
 export const CardFormSum = styled.input`
     height: 39px;
@@ -218,17 +230,29 @@ export const CardFormSum = styled.input`
         font-weight: 400;
         color: #999999;
     }
+    ${({$inputError}) => {switch ($inputError) {
+      case 'valid':
+        return `background-color: rgba(241, 235, 253, 1);
+                 border: 0.5px solid #7334EA;`;
+      case "invalid":
+        return `background-color: rgba(255, 235, 235, 1);
+                 border: 0.5px solid #F25050;`;
+      default:
+        return `background-color: #FFFFFF;
+                 border: 0.5px solid #999999;`;
+    }}}
 `
 export const CardFormButton = styled.button`
     margin-left: 32px;
     
     margin-bottom: 32px;
-    background-color: #7334EA;
+    background-color:${(props) => (props.$activButton ? '#7334EA' : '#999999')} ;
     border: none;
     border-radius: 6px;
     padding: 12px 82px 12px 79px;
     color: #ffffff;
     cursor: pointer;
+
 `
 export const StyledDatePicker = styled(DatePicker)`
   padding: 12px 12px;
@@ -242,10 +266,10 @@ export const StyledDatePicker = styled(DatePicker)`
   background-color: ${(props) => (props.$isInvalid ? "rgba(255, 235, 235, 1)" : "rgba(241, 235, 253, 1)")};
   ${({ $isInvalid }) => {
     switch ($isInvalid) {
-      case "true":
+      case false:
         return `background-color: rgba(241, 235, 253, 1);
                  border: 0.5px solid #7334EA;`;
-      case "false":
+      case true:
         return `background-color: rgba(255, 235, 235, 1);
                  border: 0.5px solid #F25050;`;
       default:
@@ -254,3 +278,6 @@ export const StyledDatePicker = styled(DatePicker)`
     }
   }}
 `;
+export const ErrorStar = styled.span`
+color: red;
+`

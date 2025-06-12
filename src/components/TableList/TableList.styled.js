@@ -116,7 +116,7 @@ export const TableHeaderCell = styled.th`
         position: absolute;
         bottom: -1px;
         left: 0;
-        width: 210px;
+        width: 230px;
         height: 0.5px;
         background: #999999; /* Дополнительная тонкая линия */
     }
@@ -131,7 +131,7 @@ padding-right: 108px;
   padding-right: 108px;
 }
 &:nth-child(4) {
-  padding-right: 121px;
+  padding-right: 180px;
 }
 `
 

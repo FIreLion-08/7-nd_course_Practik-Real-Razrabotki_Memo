@@ -1,4 +1,4 @@
-import { useState, useMemo, useContext, useEffect } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import * as S from './TableList.styled.js'
 import { TransactionsContext } from '../../context/TransactionsContext.jsx'
 import { getCategoryName } from '../../constants/categories.js'
@@ -26,22 +26,20 @@ import { AuthContext } from '../../context/AuthContext.jsx'
 // }
 const formatDate = (dateString) => {
     if (!dateString) return ''
-    console.log(dateString)
-    // console.log(dateString.toLocaleDateString('ru-RU'))
-
+    
     const date = new Date(dateString)
-    // if (!isNaN(date.getTime())) {
+    
         const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0');
         const year = date.getFullYear()
       
         return `${day}.${month}.${year}`
-    // }
+    
 } 
 
 export const TableList = () => {
     // Данные таблицы
-    const { transactions, filtredCategory, sortedCategory, setTransaction, setIsEdit, setTransactions, fetchTransactions, setActiveCategory } =
+    const { transactions, filtredCategory, sortedCategory, setTransactions, fetchTransactions} =
         useContext(TransactionsContext)
     const { user } = useContext(AuthContext)
     const Token = user.user.token
@@ -167,14 +165,7 @@ export const TableList = () => {
             console.error('Ошибка при удалении транзакции:', error);
         }
     };
-    const editTrans = (id) => {
-        const transaction = transactions.find((item) => item._id === id);
-        console.log(transaction)
-        setTransaction(transaction);
-        setIsEdit(true);
-        setActiveCategory(transaction.category)
-        return transaction;
-    };
+    
 
     return (
         <S.TableBox>
@@ -254,9 +245,7 @@ export const TableList = () => {
                             <S.TableCell>{formatDate(item.date)}</S.TableCell>
                             <S.TableCell>{item.sum} ₽</S.TableCell>
                             <S.TableCell>
-                            <S.SButtonEdit onClick={() => editTrans(item._id)}>
-                                <img src="public/edit.svg" alt="edit-icon" />
-                            </S.SButtonEdit>
+                            
                             <S.SButtonDelete onClick={() => handleDeleteTransaction(item._id)}>
                                 <img src="public/bag.svg" alt="delete-icon" />
                             </S.SButtonDelete>
