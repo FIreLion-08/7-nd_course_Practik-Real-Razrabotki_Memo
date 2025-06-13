@@ -15,6 +15,7 @@ export const GlobalStyle = createGlobalStyle`
     -moz-osx-font-smoothing: grayscale;
     line-height: 1.5;
     color: #333;
+    background-color: #eaeef6;
   }
 
   code {
@@ -30,4 +31,31 @@ export const GlobalStyle = createGlobalStyle`
   button {
     font-family: inherit;
   }
+  
+    .rdrDateRangePickerWrapper{
+      max-height: 427px;
+    }
+  .rdrDefinedRangesWrapper{
+    display: none !important;
+  }
+  .rdrDateRangePickerWrapper{
+    margin-left: 14px;
+  }
+  .rdrDay{
+    border-radius: 60px;
+    background-color: rgba(244, 245, 246, 1);
+
+  }
+  .rdrMonthAndYearWrapper {
+    display: none !important;
+  }
+  .rdrMonths {
+    align-items: flex-start !important;
+  }
+
+  .rdrWeekDays{
+    border-bottom: 0.5px solid rgba(153, 153, 153, 1);
+    margin-bottom: 24px;
+  }
+
 `

@@ -5,21 +5,20 @@ import { NewCard } from '../NewCard/NewCard.jsx'
 import { TableList } from '../TableList/TableList.jsx'
 
 export const Home = () => {
-    console.log('привет')
-
     return (
-        <S.StyleHome>
+        <>
             <Header />
+            <S.StyleHome>
+                <S.StyleExpenses>
+                    <S.Title>Мои расходы</S.Title>
+                    <S.ContentBox>
+                        <TableList />
+                        <NewCard />
+                    </S.ContentBox>
+                </S.StyleExpenses>
 
-            <S.StyleExpenses>
-                <S.Title>Мои расходы</S.Title>
-                <S.ContentBox>
-                    <TableList />
-                    <NewCard />
-                </S.ContentBox>
-            </S.StyleExpenses>
-
-            <Outlet />
-        </S.StyleHome>
+                <Outlet />
+            </S.StyleHome>
+        </>
     )
 }

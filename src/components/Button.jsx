@@ -4,7 +4,7 @@ const StyledButton = styled.button`
     padding: 12px 24px;
     border: none;
     border-radius: 8px;
-    background-color: ${(props) => (props.disabled ? '#f5f5f5' : '#52c41a')};
+    background-color: ${(props) => (props.disabled ? '#f5f5f5' : '#7334EA')};
     color: ${(props) => (props.disabled ? '#d9d9d9' : '#fff')};
     font-weight: 600;
     cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
@@ -12,7 +12,7 @@ const StyledButton = styled.button`
 
     &:hover {
         background-color: ${(props) =>
-            props.disabled ? '#f5f5f5' : '#73d13d'};
+            props.disabled ? '#f5f5f5' : '#7334EA'};
     }
 `
 

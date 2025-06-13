@@ -7,7 +7,6 @@ export const CATEGORIES = {
     others: 'Другое',
 };
 
-// Функцию для преобразования
 export const getCategoryName = (categoryKey) => {
     return CATEGORIES[categoryKey] || categoryKey;
 };

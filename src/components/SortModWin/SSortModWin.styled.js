@@ -1,20 +1,20 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const ModalBox = styled.div`
-display: block;
-position: absolute;
-background-color: #FFFFFF;
-min-width: 106px;
-border: 0.5px solid rgba(153, 153, 153, 1);
-border-radius: 6px;
-box-shadow: 0px 20px 67px -12px #00000021;
-top: 235px;
-left: 785px;
-z-index: 2;
-display: flex;
-flex-direction: column;
-gap: 6px;
-padding: 12px;
+    display: block;
+    position: absolute;
+    background-color: #ffffff;
+    min-width: 106px;
+    border: 0.5px solid rgba(153, 153, 153, 1);
+    border-radius: 6px;
+    box-shadow: 0px 20px 67px -12px #00000021;
+    margin-top: 6px;
+    top: 221px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px;
 `
 export const SortCategoriesDate = styled.div`
     border-radius: 30px;
@@ -26,10 +26,10 @@ export const SortCategoriesDate = styled.div`
     ${(props) =>
         props.$isActive === 'date' &&
         `
-      background-color: #DBFFE9;
-      color:  #1FA46C;
+      background-color: #F1EBFD;
+      color:  #7334EA;
       svg path {
-  fill: #1FA46C;
+  fill: #7334EA;
 }
     `}
 `
@@ -44,10 +44,10 @@ export const SortCategoriesSum = styled.div`
     ${(props) =>
         props.$isActive === 'sum' &&
         `
-      background-color: #DBFFE9;
-      color:  #1FA46C;
+      background-color: #F1EBFD;
+      color:  #7334EA;
       svg path {
-  fill: #1FA46C;
+  fill: #7334EA;
 }
     `}
 `

@@ -1,20 +1,20 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const ModalBox = styled.div`
-display: block;
-position: absolute;
-background-color: #FFFFFF;
-min-width: 176px;
-border: 0.5px solid rgba(153, 153, 153, 1);
-border-radius: 6px;
-box-shadow: 0px 20px 67px -12px #00000021;
-top: 235px;
-left: 595px;
-z-index: 2;
-display: flex;
-flex-direction: column;
-gap: 6px;
-padding: 12px;
+    display: block;
+    position: absolute;
+    background-color: #ffffff;
+    min-width: 176px;
+    border: 0.5px solid rgba(153, 153, 153, 1);
+    border-radius: 6px;
+    box-shadow: 0px 20px 67px -12px #00000021;
+    top: 221px;
+    margin-top: 6px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px;
 `
 export const CardCategoryItemFood = styled.div`
     border-radius: 30px;
@@ -26,10 +26,10 @@ export const CardCategoryItemFood = styled.div`
     ${(props) =>
         props.$isActive === 'food' &&
         `
-      background-color: #DBFFE9;
-      color:  #1FA46C;
+      background-color: #F1EBFD;
+      color:  #7334EA;
       svg path {
-  fill: #1FA46C;
+  fill: #7334EA;
 }
     `}
 `
@@ -43,10 +43,10 @@ export const CardCategoryItemTransport = styled.div`
     ${(props) =>
         props.$isActive === 'transport' &&
         `
-      background-color: #DBFFE9;
-      color:  #1FA46C;
+      background-color: #F1EBFD;
+      color:  #7334EA;
       svg path {
-  fill: #1FA46C;
+  fill: #7334EA;
 }
     `}
 `
@@ -60,10 +60,10 @@ export const CardCategoryItemJoy = styled.div`
     ${(props) =>
         props.$isActive === 'joy' &&
         `
-      background-color: #DBFFE9;
-      color:  #1FA46C;
+      background-color: #F1EBFD;
+      color:  #7334EA;
       svg path {
-  fill: #1FA46C;
+  fill: #7334EA;
 }
     `}
 `
@@ -78,10 +78,10 @@ export const CardCategoryItemHousing = styled.div`
     ${(props) =>
         props.$isActive === 'housing' &&
         `
-      background-color: #DBFFE9;
-      color:  #1FA46C;
+      background-color: #F1EBFD;
+      color:  #7334EA;
       svg path {
-  fill: #1FA46C;
+  fill: #7334EA;
 }
     `}
 `
@@ -96,10 +96,10 @@ export const CardCategoryItemEducation = styled.div`
     ${(props) =>
         props.$isActive === 'education' &&
         `
-      background-color: #DBFFE9;
-      color:  #1FA46C;
+      background-color: #F1EBFD;
+      color:  #7334EA;
       svg path {
-  fill: #1FA46C;
+  fill: #7334EA;
 }
     `}
 `
@@ -114,10 +114,10 @@ export const CardCategoryItemOthers = styled.div`
     ${(props) =>
         props.$isActive === 'others' &&
         `
-      background-color: #DBFFE9;
-      color:  #1FA46C;
+      background-color: #F1EBFD;
+      color:  #7334EA;
       svg path {
-  fill: #1FA46C;
+  fill: #7334EA;
 }
     `}
 `

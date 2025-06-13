@@ -1,12 +1,10 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client' // Изменили импорт
+import ReactDOM from 'react-dom/client'
 import App from './App'
 import { GlobalStyle } from './styles/global'
 
-// Создаем корневой элемент
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
-// Рендерим приложение
 root.render(
     <React.StrictMode>
         <GlobalStyle />
