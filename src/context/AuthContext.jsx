@@ -10,13 +10,11 @@ export const AuthProvider = ({ children }) => {
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-    // Загружаем данные только на клиенте после монтирования
     const userData = checkLs();
     setUser(userData);
     setIsLoading(false);
   }, []);
 
-    // Универсальный метод для авторизационных запросов
     const makeAuthRequest = async (url, data) => {
         try {
             const res = await fetch (url, {
@@ -33,7 +31,6 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
-    // Вход пользователя
     const loginAut = async (login, password) => {
         const result = await makeAuthRequest(
             userHost + `/login`,
@@ -46,7 +43,6 @@ export const AuthProvider = ({ children }) => {
         return result
     }
 
-    // Регистрация пользователя
     const register = async (name, login, password) => {
         const result = await makeAuthRequest(
             userHost,
@@ -60,7 +56,6 @@ export const AuthProvider = ({ children }) => {
         return result
     }
 
-    // Выход
     const logout = () => {
         localStorage.removeItem('token')
         setUser(null)

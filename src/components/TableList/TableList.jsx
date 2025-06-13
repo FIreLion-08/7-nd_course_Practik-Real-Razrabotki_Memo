@@ -7,40 +7,26 @@ import { SortModWin } from '../SortModWin/SortModWin.jsx'
 import { filtered, filteredAndSort, sorted } from '../../api.js'
 import { AuthContext } from '../../context/AuthContext.jsx'
 
-// const formatDate = (dateString) => {
-//     if (!dateString) return ''
-//     console.log(dateString)
-
-//     if (dateString.match(/^\d{2}\.\d{2}\.\d{4}$/)) {
-//         return dateString
-//     }
-//     const date = new Date(dateString)
-//     if (!isNaN(date.getTime())) {
-//         const day = String(date.getDate()).padStart(2, '0')
-//         const month = String(date.getMonth() + 1).padStart(2, '0')
-//         const year = date.getFullYear()
-//         return `${day}.${month}.${year}`
-//     }
-
-//     return dateString
-// }
 const formatDate = (dateString) => {
     if (!dateString) return ''
-    
+
     const date = new Date(dateString)
-    
-        const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-        const year = date.getFullYear()
-      
-        return `${day}.${month}.${year}`
-    
-} 
+
+    const day = String(date.getDate()).padStart(2, '0')
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const year = date.getFullYear()
+
+    return `${day}.${month}.${year}`
+}
 
 export const TableList = () => {
-    // Данные таблицы
-    const { transactions, filtredCategory, sortedCategory, setTransactions, fetchTransactions} =
-        useContext(TransactionsContext)
+    const {
+        transactions,
+        filtredCategory,
+        sortedCategory,
+        setTransactions,
+        fetchTransactions,
+    } = useContext(TransactionsContext)
     const { user } = useContext(AuthContext)
     const Token = user.user.token
     const [isOpenModWin, setIsOpenModWin] = useState(false)
@@ -101,7 +87,6 @@ export const TableList = () => {
     useEffect(() => {
         const fetchData = async () => {
             if (filtredCategory && sortedCategory) {
-
                 try {
                     const response = await filteredAndSort(
                         filtredCategory,
@@ -109,34 +94,22 @@ export const TableList = () => {
                         Token
                     )
                     setTransactions(response)
-
                 } catch (err) {
                     console.error('Ошибка:', err.message)
-
                 }
             } else if (filtredCategory) {
                 try {
-                    const response = await filtered(
-                        filtredCategory,
-                        Token
-                    )
+                    const response = await filtered(filtredCategory, Token)
                     setTransactions(response)
-
                 } catch (err) {
                     console.error('Ошибка:', err.message)
-
                 }
-            } else if (sortedCategory){
+            } else if (sortedCategory) {
                 try {
-                    const response = await sorted(
-                        sortedCategory,
-                        Token
-                    )
+                    const response = await sorted(sortedCategory, Token)
                     setTransactions(response)
-
                 } catch (err) {
                     console.error('Ошибка:', err.message)
-
                 }
             } else {
                 fetchTransactions()
@@ -147,113 +120,123 @@ export const TableList = () => {
 
     const handleDeleteTransaction = async (id) => {
         try {
-            const response = await fetch(`https://wedev-api.sky.pro/api/transactions/${id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            const response = await fetch(
+                `https://wedev-api.sky.pro/api/transactions/${id}`,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem(
+                            'token'
+                        )}`,
+                    },
                 }
-            });
+            )
 
             if (!response.ok) {
-                throw new Error(`Ошибка: ${response.status}`);
+                throw new Error(`Ошибка: ${response.status}`)
             }
-           
-            setTransactions(transactions.filter(item => item._id !== id));
-            console.log('Транзакция успешно удалена');
 
+            setTransactions(transactions.filter((item) => item._id !== id))
         } catch (error) {
-            console.error('Ошибка при удалении транзакции:', error);
+            console.error('Ошибка при удалении транзакции:', error)
         }
-    };
-    
+    }
 
     return (
         <S.TableBox>
             <S.TableHeader>
                 <S.TitleHeader>Таблица расходов</S.TitleHeader>
                 <S.FilterControls>
-                    <S.ModWinPos><S.SFilterCategory
-                        onClick={() => {setIsOpenModWin((prev) => !prev)
-                            setIsOpenSortModWin(false)
-                        }
-                            
-                        }
-                    >
-                        Фильтровать по категории{' '}
-                        {category && <S.SCategory>{category}</S.SCategory>}{' '}
-                        <svg
-                            width="7"
-                            height="6"
-                            viewBox="0 0 7 6"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                d="M3.5 5.5L0.468911 0.25L6.53109 0.25L3.5 5.5Z"
-                                fill="black"
-                            />
-                        </svg>
-                    </S.SFilterCategory>
-                    {isOpenModWin && <ModalWin />}
-                    </S.ModWinPos>
-                    
                     <S.ModWinPos>
-<S.SSortTransaction
-                        onClick={() => {setIsOpenSortModWin((prev) => !prev)
-                            setIsOpenModWin(false)
-                        }}
-                    >
-                        Сортировать по{' '}
-                        {sort && <S.SCategory>{sort}</S.SCategory>}{' '}
-                        <svg
-                            width="7"
-                            height="6"
-                            viewBox="0 0 7 6"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
+                        <S.SFilterCategory
+                            onClick={() => {
+                                setIsOpenModWin((prev) => !prev)
+                                setIsOpenSortModWin(false)
+                            }}
                         >
-                            <path
-                                d="M3.5 5.5L0.468911 0.25L6.53109 0.25L3.5 5.5Z"
-                                fill="black"
-                            />
-                        </svg>
-                    </S.SSortTransaction>
-                    {isOpenSortModWin && <SortModWin />}
+                            Фильтровать по категории{' '}
+                            {category && <S.SCategory>{category}</S.SCategory>}{' '}
+                            <svg
+                                width="7"
+                                height="6"
+                                viewBox="0 0 7 6"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M3.5 5.5L0.468911 0.25L6.53109 0.25L3.5 5.5Z"
+                                    fill="black"
+                                />
+                            </svg>
+                        </S.SFilterCategory>
+                        {isOpenModWin && <ModalWin />}
                     </S.ModWinPos>
-                    
+
+                    <S.ModWinPos>
+                        <S.SSortTransaction
+                            onClick={() => {
+                                setIsOpenSortModWin((prev) => !prev)
+                                setIsOpenModWin(false)
+                            }}
+                        >
+                            Сортировать по{' '}
+                            {sort && <S.SCategory>{sort}</S.SCategory>}{' '}
+                            <svg
+                                width="7"
+                                height="6"
+                                viewBox="0 0 7 6"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M3.5 5.5L0.468911 0.25L6.53109 0.25L3.5 5.5Z"
+                                    fill="black"
+                                />
+                            </svg>
+                        </S.SSortTransaction>
+                        {isOpenSortModWin && <SortModWin />}
+                    </S.ModWinPos>
                 </S.FilterControls>
             </S.TableHeader>
-<S.TableContainerScroll>
-        <S.TableContainer>
-            <S.TableHead>
-                <S.TableRow>
-                    <S.TableHeaderCell>Описание</S.TableHeaderCell>
-                    <S.TableHeaderCell>Категория</S.TableHeaderCell>
-                    <S.TableHeaderCell>Дата</S.TableHeaderCell>
-                    <S.TableHeaderCell>Сумма</S.TableHeaderCell>
-<S.TableHeaderCell></S.TableHeaderCell>
-                </S.TableRow>
-            </S.TableHead>
-
-                <S.TableBody>
-                    {transactions.map((item) => (
-                        <S.TableRow key={item._id}>
-                            <S.TableCell>{item.description}</S.TableCell>
-                            <S.TableCell>
-                                {getCategoryName(item.category)}
-                            </S.TableCell>
-                            <S.TableCell>{formatDate(item.date)}</S.TableCell>
-                            <S.TableCell>{item.sum} ₽</S.TableCell>
-                            <S.TableCell>
-                            
-                            <S.SButtonDelete onClick={() => handleDeleteTransaction(item._id)}>
-                                <img src="public/bag.svg" alt="delete-icon" />
-                            </S.SButtonDelete>
-                        </S.TableCell>
+            <S.TableContainerScroll>
+                <S.TableContainer>
+                    <S.TableHead>
+                        <S.TableRow>
+                            <S.TableHeaderCell>Описание</S.TableHeaderCell>
+                            <S.TableHeaderCell>Категория</S.TableHeaderCell>
+                            <S.TableHeaderCell>Дата</S.TableHeaderCell>
+                            <S.TableHeaderCell>Сумма</S.TableHeaderCell>
+                            <S.TableHeaderCell></S.TableHeaderCell>
                         </S.TableRow>
-                    ))}
-                </S.TableBody>
-            </S.TableContainer>
+                    </S.TableHead>
+
+                    <S.TableBody>
+                        {transactions.map((item) => (
+                            <S.TableRow key={item._id}>
+                                <S.TableCell>{item.description}</S.TableCell>
+                                <S.TableCell>
+                                    {getCategoryName(item.category)}
+                                </S.TableCell>
+                                <S.TableCell>
+                                    {formatDate(item.date)}
+                                </S.TableCell>
+                                <S.TableCell>{item.sum} ₽</S.TableCell>
+                                <S.TableCell>
+                                    <S.SButtonDelete
+                                        onClick={() =>
+                                            handleDeleteTransaction(item._id)
+                                        }
+                                    >
+                                        <img
+                                            src="public/bag.svg"
+                                            alt="delete-icon"
+                                        />
+                                    </S.SButtonDelete>
+                                </S.TableCell>
+                            </S.TableRow>
+                        ))}
+                    </S.TableBody>
+                </S.TableContainer>
             </S.TableContainerScroll>
         </S.TableBox>
     )

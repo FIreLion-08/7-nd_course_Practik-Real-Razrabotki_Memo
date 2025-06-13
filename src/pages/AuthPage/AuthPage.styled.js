@@ -8,7 +8,6 @@ export const Container = styled.div`
     height: 100vh;
     background-color: #f5f5f5;
     gap: 20px;
-    
 `
 
 export const Card = styled.div`
@@ -18,7 +17,6 @@ export const Card = styled.div`
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 380px;
-    
 `
 
 export const Title = styled.h2`
@@ -35,7 +33,7 @@ export const SwitchText = styled.p`
 `
 
 export const SwitchLink = styled(Link)`
-    color: #7334EA;
+    color: #7334ea;
     text-decoration: none;
     font-weight: 500;
 

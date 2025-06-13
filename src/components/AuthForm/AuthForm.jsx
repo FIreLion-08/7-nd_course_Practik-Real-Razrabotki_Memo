@@ -15,7 +15,6 @@ const AuthForm = ({ isLogin, onSuccess }) => {
     const [validName, setValidName] = useState('empty')
     const [validLogin, setValidLogin] = useState('empty')
     const [validPass, setValidPass] = useState('empty')
-    console.log(isSubmitting)
 
     const { loginAut, register } = useContext(AuthContext)
 
@@ -68,7 +67,7 @@ const AuthForm = ({ isLogin, onSuccess }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if (!isFormValid) return // Дополнительная проверка на валидность
+        if (!isFormValid) return 
         setError('')
         setIsSubmitting(true)
 
@@ -83,15 +82,12 @@ const AuthForm = ({ isLogin, onSuccess }) => {
                     formData.password
                 )
             }
-
             if (result.success) {
                 onSuccess()
             } else {
                 setError(result.error || 'Произошла неизвестная ошибка')
             }
-        } catch (err) {
-            console.log(err)
-
+        } catch {
             setError('Неверный логин или пароль')
         } finally {
             setIsSubmitting(false)

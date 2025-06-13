@@ -1,12 +1,11 @@
 import styled from 'styled-components'
 
 export const TableBox = styled.div`
-  width: 790px;
-  height: 618px;
+    width: 790px;
+    height: 618px;
     border-radius: 30px;
     box-shadow: 0px 20px 67px -12px rgba(0, 0, 0, 0.13);
     background: rgb(255, 255, 255);
-    
 `
 
 export const TableHeader = styled.div`
@@ -22,9 +21,7 @@ export const TitleHeader = styled.h2`
     font-size: 24px;
     font-weight: 700;
     line-height: 100%;
-letter-spacing: 0px;
-/* padding-right: 130px; */
-    
+    letter-spacing: 0px;
 `
 
 export const FilterControls = styled.div`
@@ -53,10 +50,9 @@ export const SortSelect = styled.select`
 export const TableContainerScroll = styled.div`
     max-height: 520px;
     overflow-y: scroll;
-   overflow-x: hidden;
-    width: calc(100% + 4px); /* Компенсируем ширину скроллбара */
+    overflow-x: hidden;
+    width: calc(100% + 4px);
 
-    /* Полностью кастомный скроллбар без стрелок */
     &::-webkit-scrollbar {
         width: 6px;
         height: 100px;
@@ -72,39 +68,34 @@ export const TableContainerScroll = styled.div`
         border-radius: 30px;
     }
 
-    /* Убираем кнопки стрелок */
     &::-webkit-scrollbar-button {
         display: none;
         width: 0;
         height: 0;
     }
 
-    /* Для Firefox */
     scrollbar-width: thin;
     scrollbar-color: #d9d9d9 transparent;
 `
 
 export const TableContainer = styled.table`
     border-collapse: collapse;
-  border-spacing: 0;
+    border-spacing: 0;
 `
 
 export const TableHead = styled.thead`
-width: 790px;
-position: sticky;
-  top: 0;
-  z-index: 1;
-  background-color: #ffffff;
-
+    width: 790px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #ffffff;
 `
 
 export const TableBody = styled.tbody``
 
-export const TableRow = styled.tr`
-`
+export const TableRow = styled.tr``
 
 export const TableHeaderCell = styled.th`
-    
     text-align: left;
     font-family: Montserrat;
     font-size: 12px;
@@ -118,21 +109,21 @@ export const TableHeaderCell = styled.th`
         left: 0;
         width: 230px;
         height: 0.5px;
-        background: #999999; /* Дополнительная тонкая линия */
+        background: #999999;
     }
-    &:first-child{
-padding-left: 32px;
-padding-right: 108px;
+    &:first-child {
+        padding-left: 32px;
+        padding-right: 108px;
     }
     &:nth-child(2) {
-  padding-right: 108px;
-}
-&:nth-child(3) {
-  padding-right: 108px;
-}
-&:nth-child(4) {
-  padding-right: 180px;
-}
+        padding-right: 108px;
+    }
+    &:nth-child(3) {
+        padding-right: 108px;
+    }
+    &:nth-child(4) {
+        padding-right: 180px;
+    }
 `
 
 export const TableCell = styled.td`
@@ -141,9 +132,8 @@ export const TableCell = styled.td`
     font-family: Montserrat;
     font-size: 12px;
     font-weight: 400;
-    &:first-child{
-padding-left: 32px;
-
+    &:first-child {
+        padding-left: 32px;
     }
 `
 
@@ -154,7 +144,7 @@ export const SCategory = styled.span`
     letter-spacing: 0px;
     text-align: center;
     text-decoration: underline;
-    color: #7334EA;
+    color: #7334ea;
 `
 export const SFilterCategory = styled.p`
     cursor: pointer;

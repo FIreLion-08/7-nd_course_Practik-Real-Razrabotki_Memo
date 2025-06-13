@@ -11,17 +11,15 @@ export const TransactionsProvider = ({ children }) => {
     const [periodTransactions, setPeriodTransactions] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
-    
+
     const [filtredCategory, setFiltredCategory] = useState(null)
     const { user } = useContext(AuthContext)
-     const [sortedCategory, setSortedCategory] = useState(null)
+    const [sortedCategory, setSortedCategory] = useState(null)
     const [period, setPeriod] = useState({
         start: '',
         end: '',
     })
-    const [isEdit, setIsEdit] = useState(false)
-    const [transaction, setTransaction] = useState(null)
-     const [activeCategory, setActiveCategory] = useState(null)
+    const [activeCategory, setActiveCategory] = useState(null)
     const fetchTransactions = async (params = {}) => {
         if (!user) return
 
@@ -46,7 +44,6 @@ export const TransactionsProvider = ({ children }) => {
         }
     }
 
-    
     useEffect(() => {
         fetchTransactions()
     }, [user])
@@ -57,24 +54,18 @@ export const TransactionsProvider = ({ children }) => {
                 transactions,
                 isLoading,
                 error,
-                
                 fetchTransactions,
-                
                 setTransactions,
                 filtredCategory,
                 setFiltredCategory,
                 sortedCategory,
                 setSortedCategory,
-                isEdit,
-                setIsEdit,
-                transaction,
-                setTransaction,
-                activeCategory, 
+                activeCategory,
                 setActiveCategory,
                 periodTransactions,
                 setPeriodTransactions,
-                period, 
-                setPeriod
+                period,
+                setPeriod,
             }}
         >
             {children}

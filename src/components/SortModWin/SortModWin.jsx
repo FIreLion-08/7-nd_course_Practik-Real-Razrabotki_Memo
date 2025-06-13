@@ -7,16 +7,9 @@ import {
 } from './SSortModWin.styled'
 import { TransactionsContext } from '../../context/TransactionsContext'
 
-
 export const SortModWin = () => {
-    const {
-        sortedCategory,
-        setSortedCategory,
-        
-        
-    } = useContext(TransactionsContext)
-    
-    
+    const { sortedCategory, setSortedCategory } =
+        useContext(TransactionsContext)
 
     return (
         <ModalBox>

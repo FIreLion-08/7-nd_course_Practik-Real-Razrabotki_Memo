@@ -3,7 +3,6 @@ import {
     BarChart,
     Bar,
     XAxis,
-    YAxis,
     Tooltip,
     LabelList,
     ResponsiveContainer,
@@ -16,7 +15,6 @@ import { ru } from 'date-fns/locale'
 const ExpenseChart = () => {
     const { periodTransactions, period } = useContext(TransactionsContext)
 
-    // 1. Полный список категорий с русскими названиями и цветами
     const categoriesConfig = {
         food: {
             name: 'Еда',
@@ -44,16 +42,15 @@ const ExpenseChart = () => {
         },
     }
 
-    // 2. Создаем начальную структуру со всеми категориями
+
     const processData = () => {
-        // Инициализируем все категории с суммой 0
+ 
         const result = Object.keys(categoriesConfig).map((key) => ({
             name: categoriesConfig[key].name,
             sum: 0,
             fill: categoriesConfig[key].color,
         }))
 
-        // Заполняем данные из транзакций
         periodTransactions.forEach((transaction) => {
             const category = categoriesConfig[transaction.category]
             if (category) {

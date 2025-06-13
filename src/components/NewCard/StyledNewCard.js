@@ -1,5 +1,5 @@
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 import styled from 'styled-components'
 
 export const CardBox = styled.div`
@@ -34,24 +34,26 @@ export const CardFormDiscription = styled.input`
     border-radius: 6px;
     margin-left: 32px;
     margin-bottom: 24px;
-     margin-right: 34px;
+    margin-right: 34px;
     padding-left: 12px;
     &::placeholder {
         font-size: 12px;
         font-weight: 400;
         color: #999999;
     }
-    ${({$validationDescription}) => {switch ($validationDescription) {
-      case 'valid':
-        return `background-color: rgba(241, 235, 253, 1);
-                 border: 0.5px solid #7334EA;`;
-      case "invalid":
-        return `background-color: rgba(255, 235, 235, 1);
-                 border: 0.5px solid #F25050;`;
-      default:
-        return `background-color: #FFFFFF;
-                 border: 0.5px solid #999999;`;
-    }}}
+    ${({ $validationDescription }) => {
+        switch ($validationDescription) {
+            case 'valid':
+                return `background-color: rgba(241, 235, 253, 1);
+                 border: 0.5px solid #7334EA;`
+            case 'invalid':
+                return `background-color: rgba(255, 235, 235, 1);
+                 border: 0.5px solid #F25050;`
+            default:
+                return `background-color: #FFFFFF;
+                 border: 0.5px solid #999999;`
+        }
+    }}
 `
 export const CardCategoryHeader = styled.h3`
     font-size: 16px;
@@ -191,14 +193,13 @@ export const CardFormDate = styled.input`
     border-radius: 6px;
     margin-left: 32px;
     margin-bottom: 24px;
-     margin-right: 34px;
+    margin-right: 34px;
     padding-left: 12px;
     border-color: ${(props) => (props.$hasError ? 'red' : 'initial')};
     &::placeholder {
         font-size: 12px;
         font-weight: 400;
         color: #999999;
-        
     }
 `
 export const CardSumHeader = styled.h3`
@@ -207,7 +208,6 @@ export const CardSumHeader = styled.h3`
     line-height: 100%;
     padding-bottom: 16px;
     padding-left: 32px;
-    
 `
 export const CardFormSum = styled.input`
     height: 39px;
@@ -216,7 +216,7 @@ export const CardFormSum = styled.input`
     border-radius: 6px;
     margin-left: 32px;
     margin-bottom: 24px;
-     margin-right: 34px;
+    margin-right: 34px;
     padding-left: 12px;
     -moz-appearance: textfield;
     &::-webkit-outer-spin-button,
@@ -230,54 +230,57 @@ export const CardFormSum = styled.input`
         font-weight: 400;
         color: #999999;
     }
-    ${({$inputError}) => {switch ($inputError) {
-      case 'valid':
-        return `background-color: rgba(241, 235, 253, 1);
-                 border: 0.5px solid #7334EA;`;
-      case "invalid":
-        return `background-color: rgba(255, 235, 235, 1);
-                 border: 0.5px solid #F25050;`;
-      default:
-        return `background-color: #FFFFFF;
-                 border: 0.5px solid #999999;`;
-    }}}
+    ${({ $inputError }) => {
+        switch ($inputError) {
+            case 'valid':
+                return `background-color: rgba(241, 235, 253, 1);
+                 border: 0.5px solid #7334EA;`
+            case 'invalid':
+                return `background-color: rgba(255, 235, 235, 1);
+                 border: 0.5px solid #F25050;`
+            default:
+                return `background-color: #FFFFFF;
+                 border: 0.5px solid #999999;`
+        }
+    }}
 `
 export const CardFormButton = styled.button`
     margin-left: 32px;
-    
+
     margin-bottom: 32px;
-    background-color:${(props) => (props.$activButton ? '#7334EA' : '#999999')} ;
+    background-color: ${(props) =>
+        props.$activButton ? '#7334EA' : '#999999'};
     border: none;
     border-radius: 6px;
     padding: 12px 82px 12px 79px;
     color: #ffffff;
     cursor: pointer;
-
 `
 export const StyledDatePicker = styled(DatePicker)`
-  padding: 12px 12px;
-  border: 0.5px solid #ccc;
-  border-radius: 6px;
-  font-size: 12px;
-  width: 313px;
-  background-color: white;
-  margin-left: 32px;
-  margin-bottom: 24px;
-  background-color: ${(props) => (props.$isInvalid ? "rgba(255, 235, 235, 1)" : "rgba(241, 235, 253, 1)")};
-  ${({ $isInvalid }) => {
-    switch ($isInvalid) {
-      case false:
-        return `background-color: rgba(241, 235, 253, 1);
-                 border: 0.5px solid #7334EA;`;
-      case true:
-        return `background-color: rgba(255, 235, 235, 1);
-                 border: 0.5px solid #F25050;`;
-      default:
-        return `background-color: #FFFFFF;
-                 border: 0.5px solid #999999;`;
-    }
-  }}
-`;
+    padding: 12px 12px;
+    border: 0.5px solid #ccc;
+    border-radius: 6px;
+    font-size: 12px;
+    width: 313px;
+    background-color: white;
+    margin-left: 32px;
+    margin-bottom: 24px;
+    background-color: ${(props) =>
+        props.$isInvalid ? 'rgba(255, 235, 235, 1)' : 'rgba(241, 235, 253, 1)'};
+    ${({ $isInvalid }) => {
+        switch ($isInvalid) {
+            case false:
+                return `background-color: rgba(241, 235, 253, 1);
+                 border: 0.5px solid #7334EA;`
+            case true:
+                return `background-color: rgba(255, 235, 235, 1);
+                 border: 0.5px solid #F25050;`
+            default:
+                return `background-color: #FFFFFF;
+                 border: 0.5px solid #999999;`
+        }
+    }}
+`
 export const ErrorStar = styled.span`
-color: red;
+    color: red;
 `

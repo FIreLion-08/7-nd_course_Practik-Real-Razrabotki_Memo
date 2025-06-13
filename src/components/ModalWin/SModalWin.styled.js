@@ -1,21 +1,20 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const ModalBox = styled.div`
-display: block;
-position: absolute;
-background-color: #FFFFFF;
-min-width: 176px;
-border: 0.5px solid rgba(153, 153, 153, 1);
-border-radius: 6px;
-box-shadow: 0px 20px 67px -12px #00000021;
-top: 221px;
-/* left: 595px; */
-margin-top: 6px;
-z-index: 2;
-display: flex;
-flex-direction: column;
-gap: 6px;
-padding: 12px;
+    display: block;
+    position: absolute;
+    background-color: #ffffff;
+    min-width: 176px;
+    border: 0.5px solid rgba(153, 153, 153, 1);
+    border-radius: 6px;
+    box-shadow: 0px 20px 67px -12px #00000021;
+    top: 221px;
+    margin-top: 6px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px;
 `
 export const CardCategoryItemFood = styled.div`
     border-radius: 30px;

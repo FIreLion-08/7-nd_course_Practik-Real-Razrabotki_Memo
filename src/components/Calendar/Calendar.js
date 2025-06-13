@@ -68,8 +68,8 @@ export const CustomDayPicker = styled(DayPicker)`
     padding-top: 24px;
 
     .rdp-caption_label {
-        text-transform: capitalize; /* Первая буква заглавная */
-        font-weight: 600; /* Жирный шрифт */
+        text-transform: capitalize; 
+        font-weight: 600; 
         font-size: 16px;
     }
 
@@ -103,7 +103,7 @@ export const CustomDayPicker = styled(DayPicker)`
         display: none;
     }
     .rdp-day:not(.rdp-day_selected):not(.rdp-day_range_middle):not(.rdp-day_range_start):not(.rdp-day_range_end):not([aria-selected='true']) {
-    background-color: #e9ecef; /* Цвет для невыбранных дней */
+    background-color: #e9ecef;
 }
 
 

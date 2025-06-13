@@ -14,7 +14,6 @@ export const Header = styled.nav`
 
 export const Logo = styled.h1`
     text-align: center;
-    /* margin-bottom: 30px; */
     font-size: 14px;
     color: #030303;
 `
@@ -36,7 +35,6 @@ export const MenuList = styled.ul`
 `
 
 export const MenuItem = styled.li`
-    /* margin-bottom: 10px; */
     display: block;
     text-align: center;
     color: #030303;
@@ -45,11 +43,10 @@ export const MenuItem = styled.li`
 
     &:hover,
     .active {
-        color: #7334EA;
+        color: #7334ea;
         font-weight: 600;
-        border-bottom: 2px solid #7334EA;
+        border-bottom: 2px solid #7334ea;
     }
-
 `
 
 export const HeadExpenses = styled(NavLink)`
@@ -57,8 +54,6 @@ export const HeadExpenses = styled(NavLink)`
     display: inline-block;
     border-bottom: 2px solid transparent;
     padding-bottom: 2px;
-
-    
 `
 
 export const HeadAnalysis = styled(NavLink)`
@@ -66,7 +61,6 @@ export const HeadAnalysis = styled(NavLink)`
     display: inline-block;
     border-bottom: 2px solid transparent;
     padding-bottom: 2px;
-
 `
 
 export const HeadExit = styled(NavLink)`
