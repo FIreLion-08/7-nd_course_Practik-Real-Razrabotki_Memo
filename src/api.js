@@ -99,3 +99,22 @@ export async function expensesPeriod(dates, token) {
     throw new Error(error.message);
   }
 }
+export async function deleteTransation(id){
+  try {
+    const response = await fetch(
+                `https://wedev-api.sky.pro/api/transactions/${id}`,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem(
+                            'token'
+                        )}`,
+                    },
+                }
+            );
+            const data = await response.json()
+            return data.transactions
+  }  catch (error) {
+            throw new Error(error.message);
+        }
+}

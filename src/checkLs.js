@@ -5,5 +5,5 @@ export function checkLs() {
         : null
     } catch {
         return null
-    }
+    } 
 }

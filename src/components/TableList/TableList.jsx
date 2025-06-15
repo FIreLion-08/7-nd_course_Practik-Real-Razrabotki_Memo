@@ -4,8 +4,12 @@ import { TransactionsContext } from '../../context/TransactionsContext.jsx'
 import { getCategoryName } from '../../constants/categories.js'
 import { ModalWin } from '../ModalWin/ModalWin.jsx'
 import { SortModWin } from '../SortModWin/SortModWin.jsx'
-import { filtered, filteredAndSort, sorted } from '../../api.js'
-import { AuthContext } from '../../context/AuthContext.jsx'
+import {
+    deleteTransation,
+    filtered,
+    filteredAndSort,
+    sorted,
+} from '../../api.js'
 
 const formatDate = (dateString) => {
     if (!dateString) return ''
@@ -27,8 +31,8 @@ export const TableList = () => {
         setTransactions,
         fetchTransactions,
     } = useContext(TransactionsContext)
-    const { user } = useContext(AuthContext)
-    const Token = user.user.token
+
+    const Token = localStorage.getItem('token')
     const [isOpenModWin, setIsOpenModWin] = useState(false)
     const [isOpenSortModWin, setIsOpenSortModWin] = useState(false)
     const [category, setCategory] = useState('')
@@ -120,23 +124,11 @@ export const TableList = () => {
 
     const handleDeleteTransaction = async (id) => {
         try {
-            const response = await fetch(
-                `https://wedev-api.sky.pro/api/transactions/${id}`,
-                {
-                    method: 'DELETE',
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem(
-                            'token'
-                        )}`,
-                    },
-                }
-            )
+            const response = await deleteTransation(id)
+            
+            
+            setTransactions(response)
 
-            if (!response.ok) {
-                throw new Error(`Ошибка: ${response.status}`)
-            }
-
-            setTransactions(transactions.filter((item) => item._id !== id))
         } catch (error) {
             console.error('Ошибка при удалении транзакции:', error)
         }

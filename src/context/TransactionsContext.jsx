@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect, useContext } from 'react'
+import { createContext, useState, useContext } from 'react'
 import axios from 'axios'
 import { AuthContext } from './AuthContext'
 
@@ -44,9 +44,7 @@ export const TransactionsProvider = ({ children }) => {
         }
     }
 
-    useEffect(() => {
-        fetchTransactions()
-    }, [user])
+    
 
     return (
         <TransactionsContext.Provider

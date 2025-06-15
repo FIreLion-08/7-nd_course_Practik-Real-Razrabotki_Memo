@@ -23,15 +23,14 @@ import {
     ErrorStar,
 } from './StyledNewCard'
 import { postTransaction } from '../../api'
-import { AuthContext } from '../../context/AuthContext'
+
 import { TransactionsContext } from '../../context/TransactionsContext'
 import 'react-datepicker/dist/react-datepicker.css'
 
 export const NewCard = () => {
-    const { user } = useContext(AuthContext)
+    
     const {
         setTransactions,
-
         activeCategory,
         setActiveCategory,
     } = useContext(TransactionsContext)
@@ -45,9 +44,8 @@ export const NewCard = () => {
     const [isInvalid, setIsInvalid] = useState(null)
     const [activButton, setActivButton] = useState(false)
 
-    const [dateInput, setDateInput] = useState('')
-    const Token = user.user.token
-
+    
+const Token = localStorage.getItem('token')
     const [formData, setFormData] = useState({
         description: '',
         sum: '',
@@ -109,7 +107,6 @@ export const NewCard = () => {
 
         try {
             const response = await postTransaction(Token, formData)
-
             setTransactions(response)
         } catch (err) {
             console.log(err.message)
@@ -122,7 +119,6 @@ export const NewCard = () => {
                 date: '',
             })
             setSelectedDate('')
-            setDateInput('')
             setValidationDescription('empty')
             setValidationSum('empty')
             setIsInvalid(null)
@@ -132,36 +128,10 @@ export const NewCard = () => {
     const handleDateChange = (date) => {
         setSelectedDate(date)
         setCustomFormatDate(formatDateToCustom(date))
-        setDateInput('')
         setIsInvalid(false)
     }
 
-    const handleInputChange = (inputValue) => {
-        setDateInput(inputValue)
-
-        if (inputValue.length === 10) {
-            const isValid = /^\d{2}\.\d{2}\.\d{4}$/.test(inputValue)
-
-            if (isValid) {
-                const [day, month, year] = inputValue.split('.').map(Number)
-                const date = new Date(year, month - 1, day)
-
-                if (date.getDate() === day && date.getMonth() === month - 1) {
-                    setSelectedDate(date)
-                    setIsInvalid('false')
-                } else {
-                    setIsInvalid('true')
-                }
-            } else {
-                setIsInvalid('true')
-            }
-        } else if (inputValue.length === 0) {
-            setIsInvalid('null')
-        } else {
-            setIsInvalid('false')
-        }
-    }
-
+    
     useEffect(() => {
         if (
             validationSum === 'valid' &&
@@ -357,7 +327,7 @@ export const NewCard = () => {
                 <StyledDatePicker
                     selected={selectedDate}
                     onChange={handleDateChange}
-                    onInputChange={handleInputChange}
+                   
                     dateFormat="dd.MM.yyyy"
                     placeholderText="Выберите дату"
                     showYearDropdown

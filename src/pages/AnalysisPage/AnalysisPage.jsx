@@ -6,11 +6,11 @@ import * as S from './AnalysisPage.style.js'
 import MyDateRangePicker from '../../components/Calendar/Calendar.jsx'
 import ExpenseChart from '../../components/Сhart/Сhart.jsx'
 import { expensesPeriod } from '../../api.js'
-import { AuthContext } from '../../context/AuthContext.jsx'
+
 
 const AnalysisPage = () => {
-    const { user } = useContext(AuthContext)
-    const Token = user.user.token
+    
+const Token = localStorage.getItem('token')
 
     const { period, setPeriodTransactions } = useContext(TransactionsContext)
 
