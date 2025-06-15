@@ -18,3 +18,103 @@ export async function postTransaction(token, newTransaction) {
     throw new Error(error.message);
   }
 }
+
+export async function filteredAndSort(filtred, sort, token) {
+  try {
+    const response = await axios.get(
+      `https://wedev-api.sky.pro/api/transactions?sortBy=${sort}&filterBy=${filtred}`,
+      {
+       
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "text/html",
+        }
+      }
+    );
+    return response.data
+    
+    
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
+
+export async function filtered(filtred, token) {
+  try {
+    const response = await axios.get(
+      `https://wedev-api.sky.pro/api/transactions?filterBy=${filtred}`,
+      {
+       
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "text/html",
+        }
+      }
+    );
+    return response.data
+    
+    
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
+
+export async function sorted(sort, token) {
+  try {
+    const response = await axios.get(
+      `https://wedev-api.sky.pro/api/transactions?sortBy=${sort}`,
+      {
+       
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "text/html",
+        }
+      }
+    );
+    return response.data
+    
+    
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
+
+export async function expensesPeriod(dates, token) {
+  try {
+    const response = await axios.post(
+      'http://wedev-api.sky.pro/api/transactions/period',
+          { 
+          start: dates.start,
+          end: dates.end
+      } ,
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "text/html",
+        }
+      }
+    );
+    return response.data
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
+export async function deleteTransation(id){
+  try {
+    const response = await fetch(
+                `https://wedev-api.sky.pro/api/transactions/${id}`,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem(
+                            'token'
+                        )}`,
+                    },
+                }
+            );
+            const data = await response.json()
+            return data.transactions
+  }  catch (error) {
+            throw new Error(error.message);
+        }
+}

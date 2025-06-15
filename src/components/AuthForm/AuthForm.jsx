@@ -1,9 +1,8 @@
 import * as S from './AuthForm.styled.js'
 // import { useState, useContext, useEffect } from 'react'
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import Button from '../Button'
-import Input from '../Input'
 
 const AuthForm = ({ isLogin, onSuccess }) => {
     const [formData, setFormData] = useState({
@@ -13,21 +12,62 @@ const AuthForm = ({ isLogin, onSuccess }) => {
     })
     const [error, setError] = useState('')
     const [isSubmitting, setIsSubmitting] = useState(false)
+    const [validName, setValidName] = useState('empty')
+    const [validLogin, setValidLogin] = useState('empty')
+    const [validPass, setValidPass] = useState('empty')
+
     const { loginAut, register } = useContext(AuthContext)
+
+    const validateName = (value) => {
+        if (!value || !value.trim()) return 'empty'
+        if (value.trim().length < 2) return 'invalid'
+
+        return 'valid'
+    }
+
+    const validateEmail = (value) => {
+        if (!value || !value.trim()) return 'empty'
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        if (!emailRegex.test(value)) return 'invalid'
+
+        return 'valid'
+    }
+
+    const validatePassword = (value) => {
+        if (!value) return 'empty'
+        if (value.length < 5) return 'invalid'
+
+        return 'valid'
+    }
 
     const isFormValid = isLogin
         ? formData.login && formData.password
         : formData.name && formData.login && formData.password
 
-    const handleChange = (e) => {
+    const handleChangeName = (e) => {
         const { name, value } = e.target
         setFormData((prev) => ({ ...prev, [name]: value }))
+        setValidName(validateName(value))
+        setError('')
+    }
+
+    const handleChangeLogin = (e) => {
+        const { name, value } = e.target
+        setFormData((prev) => ({ ...prev, [name]: value }))
+        setValidLogin(validateEmail(value))
+        setError('')
+    }
+
+    const handleChangePass = (e) => {
+        const { name, value } = e.target
+        setFormData((prev) => ({ ...prev, [name]: value }))
+        setValidPass(validatePassword(value))
         setError('')
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if (!isFormValid) return // Дополнительная проверка на валидность
+        if (!isFormValid) return 
         setError('')
         setIsSubmitting(true)
 
@@ -42,52 +82,77 @@ const AuthForm = ({ isLogin, onSuccess }) => {
                     formData.password
                 )
             }
-
             if (result.success) {
                 onSuccess()
             } else {
                 setError(result.error || 'Произошла неизвестная ошибка')
             }
-        } catch (err) {
+        } catch {
             setError('Неверный логин или пароль')
         } finally {
             setIsSubmitting(false)
         }
     }
 
+    useEffect(() => {
+        if (validLogin === 'valid' && validPass === 'valid') {
+            setIsSubmitting(false)
+        } else {
+            setIsSubmitting(true)
+        }
+    }, [validName, validLogin, validPass])
+
     return (
-        <S.Form onSubmit={handleSubmit}>
-            {!isLogin && (
-                <Input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="Имя"
-                    required
-                />
-            )}
-            <Input
-                type="login"
-                name="login"
-                value={formData.login}
-                onChange={handleChange}
-                placeholder="Эл. почта"
-                required
-            />
-            <Input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                placeholder="Пароль"
-                required
-            />
-            {error && <S.ErrorMessage>{error}</S.ErrorMessage>}
-            <Button type="submit" disabled={!isFormValid || isSubmitting}>
-                {isLogin ? 'Войти' : 'Зарегистрироваться'}
-            </Button>
-        </S.Form>
+        <>
+            <S.Form onSubmit={handleSubmit}>
+                <S.InputContainer>
+                    {!isLogin && (
+                        <>
+                        <S.StyledInputName
+                            $validName={validName}
+                            type="text"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChangeName}
+                            placeholder="Имя"
+                            required
+                        />
+                        {validName==='invalid' && <S.StarIcon>*</S.StarIcon>}
+                        </>
+                    )}
+                </S.InputContainer>
+
+                <S.InputContainer>
+                    <S.StyledInputLogin
+                        $validLogin={validLogin}
+                        type="login"
+                        name="login"
+                        value={formData.login}
+                        onChange={handleChangeLogin}
+                        placeholder="Эл. почта"
+                        required
+                    />
+                    {validLogin==='invalid' && <S.StarIcon>*</S.StarIcon>}
+                </S.InputContainer>
+                <S.InputContainer>
+                    <S.StyledInputPass
+                        $validPass={validPass}
+                        type="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChangePass}
+                        placeholder="Пароль"
+                        required
+                    />
+                    {validPass==='invalid' && <S.StarIcon>*</S.StarIcon>}
+                </S.InputContainer>
+
+                {error && <S.ErrorMessage>{error}</S.ErrorMessage>}
+                <Button type="submit" disabled={isSubmitting}>
+                    {isLogin ? 'Войти' : 'Зарегистрироваться'}
+                </Button>
+            </S.Form>
+        </>
     )
 }
 

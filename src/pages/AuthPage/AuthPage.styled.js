@@ -12,17 +12,16 @@ export const Container = styled.div`
 
 export const Card = styled.div`
     background-color: #fff;
-    padding: 40px;
-    border-radius: 8px;
+    padding: 32px;
+    border-radius: 30px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 500px;
-    
+    max-width: 380px;
 `
 
 export const Title = styled.h2`
     margin-top: 0;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
     text-align: center;
 `
 
@@ -34,7 +33,7 @@ export const SwitchText = styled.p`
 `
 
 export const SwitchLink = styled(Link)`
-    color: #52c41a;
+    color: #7334ea;
     text-decoration: none;
     font-weight: 500;
 
