@@ -15,7 +15,7 @@ const FilterButton = styled.button`
   border: none;
   border-radius: 4px;
   background: #ffffff;
-  color: ${props => (props.selected ? '#1FA46C' : '#333')};
+  color: ${props => (props.selected ? '#7334EA' : '#333')};
   font-family: 'Montserrat', sans-serif;
   font-size: 14px;
   cursor: pointer;
@@ -58,8 +58,8 @@ const ModalItem = styled.button`
   align-items: center;
   padding: 8px;
   border: none;
-  background: ${props => (props.selected ? '#DBFFE9' : '#F4F5F6')};
-  color: ${props => (props.selected ? '#1FA46C' : '#333')};
+  background: ${props => (props.selected ? '#F1EBFD' : '#F4F5F6')};
+  color: ${props => (props.selected ? '#7334EA' : '#333')};
   font-family: 'Montserrat', sans-serif;
   font-size: 14px;
   text-align: left;
@@ -80,7 +80,7 @@ const ModalItem = styled.button`
     props.selected &&
     `
       svg.icon path {
-        fill: #1FA46C;
+        fill: #7334EA;
       }
     `}
 `;
@@ -95,7 +95,7 @@ const ArrowIcon = () => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <path d="M3.5 5.5L0.468911 0.25L6.53109 0.25L3.5 5.5Z" fill="#1FA46C" />
+    <path d="M3.5 5.5L0.468911 0.25L6.53109 0.25L3.5 5.5Z" fill="#7334EA" />
   </svg>
 );
 

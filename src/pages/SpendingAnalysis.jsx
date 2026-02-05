@@ -41,7 +41,7 @@ const MobilePeriodButton = styled.button`
     display: block;
     width: 100%;
     height: 44px;
-    background: #24A148;
+    background: #7334EA;
     color: white;
     border: none;
     border-radius: 8px;

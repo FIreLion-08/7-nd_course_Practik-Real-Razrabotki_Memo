@@ -53,13 +53,13 @@ const CategoryButton = styled.button`
   ${({ selected }) =>
     selected &&
     `
-      background: #DBFFE9;
-      color: #1FA46C;
+      background: ##F1EBFD;
+      color: #7334EA;
       svg path {
-        fill: #1FA46C;
+        fill: #7334EA;
       }
       &:hover {
-        background: #C1FFD6;
+        background: #f0ebfd;
       }
     `}
 `;

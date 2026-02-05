@@ -103,7 +103,7 @@ const SelectButton = styled.button`
   height: 44px;
   border-radius: 8px;
   border: none;
-  background: #24A148;
+  background: #7334EA;
   color: white;
   font-size: 16px;
   font-weight: 500;
