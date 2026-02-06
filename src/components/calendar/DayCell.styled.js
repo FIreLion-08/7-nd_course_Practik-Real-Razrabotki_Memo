@@ -5,9 +5,9 @@ export const DayCell = styled.div`
   height: 35px;
   border-radius: 50%;
   background: ${({ $isSelected, $isInRange }) => 
-    $isSelected ? '#CFF8E2' :
-    $isInRange ? '#EAF9F1' : '#f5f5f5'};
-  color: ${({ $isSelected }) => ($isSelected ? '#24A148' : '#000')};
+    $isSelected ? '#F1EBFD' :
+    $isInRange ? '#f9ebfd' : '#f5f5f5'};
+  color: ${({ $isSelected }) => ($isSelected ? '#7334EA' : '#000')};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,7 +16,7 @@ export const DayCell = styled.div`
   font-size: 14px;
 
   &:hover {
-    background: #e0f2e8;
+    background: #F1EBFD;
   }
   
   @media (max-width: 768px) {

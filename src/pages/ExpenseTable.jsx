@@ -29,7 +29,7 @@ const TableRow = styled.tr`
     background: #ffffff;
   }
   &:hover {
-    background: #e6f3e6;
+    background: #F1EBFD;
   }
   transition: background 0.3s ease;
 `;

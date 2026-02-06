@@ -85,9 +85,9 @@ const MonthsGrid = styled.div`
 
 const MonthCell = styled.div`
   background: ${({ $isSelected, $isInRange }) =>
-    $isSelected ? '#CFF8E2' :
-    $isInRange ? '#EAF9F1' : '#F1F1F1'};
-  color: ${({ $isSelected }) => ($isSelected ? '#24A148' : '#000')};
+    $isSelected ? '#F1E2FD' :
+    $isInRange ? '#F1EBFD' : '#F1F1F1'};
+  color: ${({ $isSelected }) => ($isSelected ? '#7334EA' : '#000')};
   border-radius: 999px;
   text-align: center;
   padding: 10px 0;
@@ -95,8 +95,8 @@ const MonthCell = styled.div`
   font-size: 14px;
 
   &:hover {
-    background: #E0F2E8;
-    color: #24A148;
+    background: #c3a7fd;
+    color: #7334EA;
   }
   
   @media (max-width: 768px) {

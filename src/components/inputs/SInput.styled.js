@@ -16,7 +16,7 @@ export const SInput = styled.input`
   border: ${(props) => {
     switch (props.$statusInput) {
       case "correct":
-        return "0.5px solid rgb(31, 164, 108)";
+        return "0.5px solid rgb(115, 52, 234)";
       case "error":
         return "0.5px solid rgb(242, 80, 80)";
       default:
@@ -39,7 +39,7 @@ export const SInput = styled.input`
   background-color: ${(props) => {
     switch (props.$statusInput) {
       case "correct":
-        return "rgb(219, 255, 233)";
+        return "rgb(241, 235, 253)";
       case "error":
         return "rgb(255, 235, 235)";
       default:

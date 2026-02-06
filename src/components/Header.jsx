@@ -41,7 +41,7 @@ const NavButton = styled(Link)`
   cursor: pointer;
   transition: color 0.3s ease;
   &:hover {
-    color: #1fa46c;
+    color: #7334EA;
     font-weight: 600;
     text-decoration: underline;
   }
@@ -58,7 +58,8 @@ const LogoutButton = styled.button`
   cursor: pointer;
   transition: color 0.3s ease;
   &:hover {
-    color: #1fa46c;
+    color: #7334EA;
+    font-weight: 600;
   }
 `;
 

@@ -57,7 +57,7 @@ export const ViewToggle = styled.div`
 
 export const ToggleButton = styled.span`
   cursor: pointer;
-  color: ${({ $isActive }) => $isActive ? '#24A148' : '#000'};
+  color: ${({ $isActive }) => $isActive ? '#7334EA' : '#000'};
   font-weight: ${({ $isActive }) => $isActive ? 600 : 400};
   text-decoration: ${({ $isActive }) => $isActive ? 'underline' : 'none'};
   transition: all 0.2s ease;
@@ -66,14 +66,14 @@ export const ToggleButton = styled.span`
   display: inline-block;
 
   &:hover {
-    color: #24A148;
+    color: #7334EA;
     font-weight: 600;
   }
   
   @media (max-width: 768px) {
     padding: 8px 16px;
     border-radius: 20px;
-    background: ${({ $isActive }) => $isActive ? '#24A148' : '#f5f5f5'};
+    background: ${({ $isActive }) => $isActive ? '#7334EA' : '#f5f5f5'};
     color: ${({ $isActive }) => $isActive ? '#fff' : '#000'};
     text-decoration: none;
     font-size: 14px;
